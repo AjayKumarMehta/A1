@@ -35,10 +35,19 @@
 html{scroll-behavior:smooth;}
 body{background:var(--base);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 
+
+/* ── NAV LOGO ────────────────────────────────────────────────────── */
+.nav-logo{font-family:var(--serif);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-img{height:40px;width:auto;object-fit:contain;border-radius:6px;padding:3px;background:var(--surface);box-shadow:0 1px 6px rgba(26,23,20,.12),0 0 0 1px var(--border);transition:box-shadow .2s,transform .2s;}
+.nav-logo:hover .nav-logo-img{box-shadow:0 4px 16px rgba(200,101,10,.22),0 0 0 1.5px var(--accent);transform:translateY(-1px);}
+.nav-logo-wordmark{display:flex;flex-direction:column;line-height:1.1;}
+.nav-logo-wordmark-top{font-family:var(--serif);font-size:15px;font-weight:400;color:var(--ink);letter-spacing:.01em;}
+.nav-logo-wordmark-sub{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+
+
 /* ── NAV ─────────────────────────────────────────────────────────── */
 nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 60px;height:58px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{font-family:var(--serif);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:9px;text-decoration:none;}
-.nav-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+
 .nav-right{display:flex;align-items:center;gap:28px;}
 .nav-link{font-size:13px;font-weight:500;color:var(--ink-mid);text-decoration:none;transition:color .15s;}
 .nav-link:hover{color:var(--accent);}
@@ -170,6 +179,32 @@ h1 em{font-style:italic;color:var(--accent);}
   opacity:1;
 }
 
+/* ── INSTRUCTIONS ───────────────────────────────────────────────── */
+.instructions{padding:56px 60px;border-bottom:1px solid var(--border);background:var(--surface);}
+.instr-eyebrow{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.instr-title{font-family:var(--serif);font-size:28px;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px;}
+.instr-sub{font-size:14px;color:var(--ink-mid);margin-bottom:36px;max-width:560px;line-height:1.7;}
+.instr-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px;}
+.instr-step{background:var(--base);border:1px solid var(--border);border-radius:4px;padding:22px 20px;position:relative;transition:border-color .2s,box-shadow .2s;}
+.instr-step:hover{border-color:var(--accent);box-shadow:0 4px 18px rgba(200,101,10,.10);}
+.instr-step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.instr-step-icon{font-size:26px;margin-bottom:10px;display:block;}
+.instr-step-title{font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px;letter-spacing:.01em;}
+.instr-step-body{font-size:12px;color:var(--ink-mid);line-height:1.7;}
+.instr-step-body b{color:var(--ink);font-weight:600;}
+.instr-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
+.instr-rule{background:var(--base);border:1px solid var(--border);border-radius:4px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start;}
+.instr-rule-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.instr-rule-text{font-size:12px;color:var(--ink-mid);line-height:1.65;}
+.instr-rule-text b{color:var(--ink);font-weight:600;display:block;margin-bottom:2px;}
+.instr-note{background:var(--accent-lo);border:1px solid rgba(200,101,10,.2);border-radius:4px;padding:14px 18px;font-size:12px;color:var(--ink-mid);line-height:1.7;display:flex;gap:10px;align-items:flex-start;}
+.instr-note-icon{font-size:16px;flex-shrink:0;}
+@media(max-width:900px){
+  .instructions{padding:40px 24px;}
+  .instr-steps{grid-template-columns:repeat(2,1fr);}
+  .instr-rules{grid-template-columns:1fr;}
+}
+
 /* ── RESULTS ─────────────────────────────────────────────────────── */
 #results{display:none;padding:0 60px 80px;}
 #results.on{display:block;}
@@ -264,12 +299,13 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><span class="nav-logo-dot"></span>BonusCalc</a>
+  <a href="https://threedis.com" target="_blank" class="nav-logo"><img src="data:image/jpeg;base64,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" alt="Three D Integrated Solutions" class="nav-logo-img"/><span class="nav-logo-wordmark"><span class="nav-logo-wordmark-top">Three D Integrated Solutions Ltd.</span><span class="nav-logo-wordmark-sub">Statutory Bonus Calculator</span></span></a>
   <div class="nav-right">
     <a href="#results" class="nav-link">Register</a>
-    <button class="nav-btn" onclick="document.getElementById('file-input').click()">Upload Files</button>
+<button class="nav-btn" onclick="document.getElementById('file-input').click()">Upload Files</button>
   </div>
 </nav>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -320,6 +356,73 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
     <button class="btn-calc" id="calc-btn" disabled onclick="runCalc()">
       ⚡ Calculate Bonus Register
     </button>
+  </div>
+</section>
+
+<!-- INSTRUCTIONS -->
+<section class="instructions">
+  <p class="instr-eyebrow">How it works</p>
+  <h2 class="instr-title">Four steps to your Bonus Register</h2>
+  <p class="instr-sub">Follow these steps to calculate statutory bonus for your employees under the Payment of Bonus Act, 1965. The tool handles eligibility, minimum wages, and LOP pro-ration automatically.</p>
+
+  <div class="instr-steps">
+    <div class="instr-step">
+      <div class="instr-step-num">1</div>
+      <span class="instr-step-icon">📋</span>
+      <div class="instr-step-title">Prepare Your Salary Register</div>
+      <div class="instr-step-body">Ensure your Excel file has these columns:<br/><b>Emp ID · Employee Name · Designation · Basic (Th) · VDA (Th) · Sal Cal Days · Pay Days · Location · Month/Year</b></div>
+    </div>
+    <div class="instr-step">
+      <div class="instr-step-num">2</div>
+      <span class="instr-step-icon">📤</span>
+      <div class="instr-step-title">Upload Monthly Files</div>
+      <div class="instr-step-body">Upload <b>one file per month</b> (Apr–Mar financial year). You can upload all 12 months at once. Files must be in <b>.xlsx</b> format. Drag &amp; drop or click to browse.</div>
+    </div>
+    <div class="instr-step">
+      <div class="instr-step-num">3</div>
+      <span class="instr-step-icon">⚡</span>
+      <div class="instr-step-title">Calculate</div>
+      <div class="instr-step-body">Click <b>Calculate Bonus Register</b>. The tool auto-detects each employee's <b>Area (A/B/C)</b>, <b>Skill level</b>, and applicable <b>Construction MW rate</b>. Bonus is computed at <b>8.33%</b> of prorated MW.</div>
+    </div>
+    <div class="instr-step">
+      <div class="instr-step-num">4</div>
+      <span class="instr-step-icon">⬇</span>
+      <div class="instr-step-title">Review &amp; Download</div>
+      <div class="instr-step-body">Filter by month, area, or eligibility. Use the <b>month picker</b> to view specific periods. Click <b>Download Excel</b> to export a compliance-ready bonus register.</div>
+    </div>
+  </div>
+
+  <p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;">Key Rules Applied Automatically</p>
+  <div class="instr-rules">
+    <div class="instr-rule">
+      <span class="instr-rule-icon">✅</span>
+      <div class="instr-rule-text"><b>Eligibility Check</b>Basic (Th) + VDA (Th) must be &gt; ₹0 and &lt; <b>₹21,000/month</b> to qualify for bonus under the Act.</div>
+    </div>
+    <div class="instr-rule">
+      <span class="instr-rule-icon">📍</span>
+      <div class="instr-rule-text"><b>Area Classification</b>Employee's location is auto-mapped to <b>Area A, B, or C</b> as per CLC city schedule, determining the applicable minimum wage rate.</div>
+    </div>
+    <div class="instr-rule">
+      <span class="instr-rule-icon">🔧</span>
+      <div class="instr-rule-text"><b>Skill Mapping</b>Designation is mapped to <b>Unskilled / Semi-Skilled / Skilled / Highly Skilled</b> using the Construction &amp; Maintenance schedule (CLC).</div>
+    </div>
+    <div class="instr-rule">
+      <span class="instr-rule-icon">📅</span>
+      <div class="instr-rule-text"><b>Period-wise MW</b>Minimum wages are picked from the correct <b>6-month CLC period</b> (Apr–Sep or Oct–Mar) based on the month of the salary register.</div>
+    </div>
+    <div class="instr-rule">
+      <span class="instr-rule-icon">📐</span>
+      <div class="instr-rule-text"><b>LOP Pro-ration</b>Minimum wages are prorated: <b>MW ÷ Sal Cal Days × Pay Days</b>, then floored (ROUNDDOWN). Accounts for Loss of Pay days automatically.</div>
+    </div>
+    <div class="instr-rule">
+      <span class="instr-rule-icon">💰</span>
+      <div class="instr-rule-text"><b>Bonus Calculation</b><b>Bonus = Round(Prorated MW × 8.33%, 0)</b>. Applied only to eligible employees. Ineligible employees show — in the bonus column.</div>
+    </div>
+  </div>
+
+  <div class="instr-note">
+    <span class="instr-note-icon">ℹ️</span>
+    <span><b>File format tip:</b> The tool auto-detects the correct sheet and header row. Month/Year can be in the filename (e.g. <b>April_2024.xlsx</b>) or in a dedicated column. Rows with item counts (e.g. <em>Feb/Item:06</em>) and month-header rows are automatically skipped.</span>
   </div>
 </section>
 
@@ -409,19 +512,26 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
 <div class="toast-wrap" id="toast-wrap"></div>
 
 <script>
+
+
 /* ══════════════════════════════════════════════════════════════════
    MINIMUM WAGES TABLE — Central Govt (all periods)
    Key: [period_start_month_idx] where 0=Apr, 6=Oct
 ══════════════════════════════════════════════════════════════════ */
 const MW_PERIODS = [
-  // [from_month(1-based), from_year, to_month, to_year, {A:{UNSKILLED,SEMI SKILLED,SKILLED,HIGHLY SKILLED}, B:{...}, C:{...}}]
-  [4,2022, 9,2022, {A:{UNSKILLED:18869,SEMISKI:20903,SKILLED:22568,HIGHSKI:24826}, B:{UNSKILLED:15994,SEMISKI:18647,SKILLED:20020,HIGHSKI:22027}, C:{UNSKILLED:12116,SEMISKI:14144,SKILLED:17108,HIGHSKI:20020}}],
-  [10,2022, 3,2023, {A:{UNSKILLED:19291,SEMISKI:21372,SKILLED:23088,HIGHSKI:25397}, B:{UNSKILLED:16354,SEMISKI:19066,SKILLED:20488,HIGHSKI:22540}, C:{UNSKILLED:12402,SEMISKI:14482,SKILLED:17446,HIGHSKI:20488}}],
-  [4,2023, 9,2023, {A:{UNSKILLED:19668,SEMISKI:21797,SKILLED:23960,HIGHSKI:26354}, B:{UNSKILLED:16680,SEMISKI:19484,SKILLED:20926,HIGHSKI:23016}, C:{UNSKILLED:13078,SEMISKI:15240,SKILLED:18271,HIGHSKI:21097}}],
-  [10,2023, 3,2024, {A:{UNSKILLED:20018,SEMISKI:22172,SKILLED:24390,HIGHSKI:26827}, B:{UNSKILLED:16970,SEMISKI:19824,SKILLED:21272,HIGHSKI:23396}, C:{UNSKILLED:13318,SEMISKI:15518,SKILLED:18596,HIGHSKI:21488}}],
-  [4,2024, 9,2024, {A:{UNSKILLED:20358,SEMISKI:22568,SKILLED:24804,HIGHSKI:27282}, B:{UNSKILLED:17264,SEMISKI:19132,SKILLED:21041,HIGHSKI:23144}, C:{UNSKILLED:15548,SEMISKI:17231,SKILLED:18941,HIGHSKI:20836}}],
-  [10,2024, 3,2025, {A:{UNSKILLED:20736,SEMISKI:22976,SKILLED:25272,HIGHSKI:27804}, B:{UNSKILLED:17588,SEMISKI:19498,SKILLED:21428,HIGHSKI:23570}, C:{UNSKILLED:15844,SEMISKI:17570,SKILLED:19298,HIGHSKI:21228}}],
-  [4,2025, 9,2025, {A:{UNSKILLED:21120,SEMISKI:23406,SKILLED:25752,HIGHSKI:28332}, B:{UNSKILLED:17922,SEMISKI:19878,SKILLED:21826,HIGHSKI:24010}, C:{UNSKILLED:16152,SEMISKI:17922,SKILLED:19668,HIGHSKI:21638}}],
+  // Construction & Maintenance schedule (CLC) — monthly = daily × 26
+  // Source: CLC Guideline notifications (Apr periods from official PDFs; Oct periods from CLC orders)
+  [4,2022,  9,2022,  {A:{UNSKILLED:18869,SEMISKI:20903,SKILLED:22568,HIGHSKI:24826}, B:{UNSKILLED:15994,SEMISKI:18647,SKILLED:20020,HIGHSKI:22027}, C:{UNSKILLED:12116,SEMISKI:14144,SKILLED:17108,HIGHSKI:20020}}],
+  [10,2022, 3,2023,  {A:{UNSKILLED:19291,SEMISKI:21372,SKILLED:23088,HIGHSKI:25397}, B:{UNSKILLED:16354,SEMISKI:19066,SKILLED:20488,HIGHSKI:22540}, C:{UNSKILLED:12402,SEMISKI:14482,SKILLED:17446,HIGHSKI:20488}}],
+  // Apr 2023 — Guideline_23-24.pdf (w.e.f. 01.04.2023): daily A=736/816/897/973, B=616/695/816/897, C=494/577/695/816
+  [4,2023,  9,2023,  {A:{UNSKILLED:19136,SEMISKI:21216,SKILLED:23322,HIGHSKI:25298}, B:{UNSKILLED:16016,SEMISKI:18070,SKILLED:21216,HIGHSKI:23322}, C:{UNSKILLED:12844,SEMISKI:15002,SKILLED:18070,HIGHSKI:21216}}],
+  [10,2023, 3,2024,  {A:{UNSKILLED:20018,SEMISKI:22172,SKILLED:24390,HIGHSKI:26827}, B:{UNSKILLED:16970,SEMISKI:19824,SKILLED:21272,HIGHSKI:23396}, C:{UNSKILLED:13318,SEMISKI:15518,SKILLED:18596,HIGHSKI:21488}}],
+  // Apr 2024 — Guideline_24-25.pdf (w.e.f. 01.04.2024): daily A=778/862/948/1028, B=651/734/862/948, C=522/610/734/862
+  [4,2024,  9,2024,  {A:{UNSKILLED:20228,SEMISKI:22412,SKILLED:24648,HIGHSKI:26728}, B:{UNSKILLED:16926,SEMISKI:19084,SKILLED:22412,HIGHSKI:24648}, C:{UNSKILLED:13572,SEMISKI:15860,SKILLED:19084,HIGHSKI:22412}}],
+  // Oct 2024 — PIB Press Release + CLC PDF (w.e.f. 01.10.2024): daily A=783/868/954/1035, B=655/739/868/954, C=526/614/739/868
+  [10,2024, 3,2025,  {A:{UNSKILLED:20358,SEMISKI:22568,SKILLED:24804,HIGHSKI:26910}, B:{UNSKILLED:17030,SEMISKI:19214,SKILLED:22568,HIGHSKI:24804}, C:{UNSKILLED:13676,SEMISKI:15964,SKILLED:19214,HIGHSKI:22568}}],
+  // Apr 2025 — Guideline_25-26.pdf (w.e.f. 01.04.2025): daily A=805/893/981/1065, B=674/760/893/981, C=541/632/760/893
+  [4,2025,  9,2025,  {A:{UNSKILLED:20930,SEMISKI:23218,SKILLED:25506,HIGHSKI:27690}, B:{UNSKILLED:17524,SEMISKI:19760,SKILLED:23218,HIGHSKI:25506}, C:{UNSKILLED:14066,SEMISKI:16432,SKILLED:19760,HIGHSKI:23218}}],
 ];
 
 function getMW(area, skill, monthYear) {
@@ -448,6 +558,7 @@ function normaliseSkill(skill) {
   const s = (skill||'').toUpperCase().replace(/[-\s]+/g,'');
   if (s.includes('HIGHLY') || s.includes('HIGH')) return 'HIGHSKI';
   if (s.includes('SEMI')) return 'SEMISKI';
+  if (s.includes('UN')) return 'UNSKILLED';   // must check UN before SKILL (UNSKILLED contains SKILL)
   if (s.includes('SKILL')) return 'SKILLED';
   return 'UNSKILLED';
 }
@@ -456,13 +567,29 @@ function normaliseSkill(skill) {
    AREA MAPPING
 ══════════════════════════════════════════════════════════════════ */
 const AREA_A = ['ahmedabad','bangalore','chennai','delhi','gurgaon','hyderabad','kolkata','lucknow','mumbai','nagpur','pune','kanpur'];
-const AREA_B = ['amritsar','aurangabad','bhopal','bhubaneshwar','calicut','kozhikode','chandigarh','coimbatore','dehradun','goa','guwahati','indore','jaipur','jammu','jodhpur','kochi','madurai','mangalore','meerut','raipur','ranchi','srinagar','surat','trichy','tiruchirappalli','trivandrum','thiruvananthapuram','vadodara','varanasi','vizag','visakhapatnam','gorakhpur','hubli','jamnagar','patna','port blair','rajkot','siliguri','vijayawada','vijaywada','belgaum','belagavi'];
+const AREA_B = [
+  'amritsar','aurangabad','bhopal',
+  'bhubaneswar','bhubaneshwar','bhubneshwar','bhuvaneswar',  // all Bhubaneswar spellings
+  'calicut','kozhikode',
+  'chandigarh','chandigargh',   // company uses 'chandigargh'
+  'coimbatore','dehradun','goa','guwahati','indore',
+  'jaipur','jammu','jodhpur','kochi','madurai','mangalore','meerut',
+  'raipur','ranchi',
+  'srinagar','shrinagar',       // company uses 'shrinagar'
+  'surat','trichy','tiruchirappalli','trivandrum','thiruvananthapuram',
+  'vadodara','vadodra',         // company uses 'vadodra'
+  'varanasi','vizag','visakhapatnam',
+  'gorakhpur','hubli','jamnagar','patna','port blair','rajkot',
+  'siliguri','vijayawada','vijaywada','belgaum','belagavi'
+];
+const AREA_C = ['bathinda','dibrugarh','gaya','khajuraho','tirupati','udaipur','agartala'];
 
 function getArea(loc) {
   const l = (loc||'').toLowerCase().replace(/ new$| old$/,'').trim();
   if (AREA_A.some(a => l.includes(a))) return 'A';
   if (AREA_B.some(b => l.includes(b))) return 'B';
-  return 'C';
+  if (AREA_C.some(c => l.includes(c))) return 'C';
+  return 'C'; // default
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -480,6 +607,14 @@ const SKILL_MAP = {
   'DRIVER/ATTENDANT':    'Semi-Skilled',
   'ATTENDANT/HELPER':    'Semi-Skilled',
   'ATTENDANT':           'Semi-Skilled',
+  'ENGINEER':            'Highly Skilled',
+  'SR. ENGINEER':        'Highly Skilled',
+  'SENIOR ENGINEER':     'Highly Skilled',
+  'JR. ENGINEER':        'Highly Skilled',
+  'JUNIOR ENGINEER':     'Highly Skilled',
+  'SITE ENGINEER':       'Highly Skilled',
+  'FIELD ENGINEER':      'Highly Skilled',
+  'PROJECT ENGINEER':    'Highly Skilled',
 };
 
 function getSkill(desig) {
@@ -489,6 +624,7 @@ function getSkill(desig) {
     if (d.includes(k) || k.includes(d)) return v;
   }
   const dl = d.toLowerCase();
+  if (dl.includes('engineer')) return 'Highly Skilled';
   if (dl.includes('technician')) return 'Skilled';
   if (dl.includes('helper')) return 'Unskilled';
   return 'Semi-Skilled';  // default for Attendant, Driver/Attendant variants
@@ -651,7 +787,9 @@ function parseRows(raw, filename) {
   const c_my  = gc(headersLC,'month/ year','month/year','monthyear','month year','period');
   const c_sd  = gc(headersLC,'sal cal days','salcaldays','cal days','caldays');
   const c_pd  = gc(headersLC,'pay days','paydays');
-  const c_loc = gc(headersLC,'branch','location','station','site','city','place');
+  // Location Name > Branch > Division > Station/Site/City — order matters
+  const c_loc  = gc(headersLC,'location name','locationname','location','branch','station','site','city','place');
+  const c_div  = gc(headersLC,'divi_name','divi name','diviname','division','div name');
   const c_ba  = (() => { let last=-1; headersLC.forEach((h,i)=>{if(h&&norm(h)==='basic')last=i;}); return last; })();
   const c_va  = (() => { let last=-1; headersLC.forEach((h,i)=>{const n=norm(h);if(n==='vda'||n==='da')last=i;}); return last; })();
 
@@ -705,7 +843,15 @@ function parseRows(raw, filename) {
     const theoretical=bt+vt;
     const desig=c_dg>=0?String(row[c_dg]||'').trim():'';
     const loc_raw=c_loc>=0?String(row[c_loc]==null?'':row[c_loc]).trim():'';
-    const loc=loc_raw||String(row[1]==null?'':row[1]).trim();
+    // If Location Name is empty, try extracting city from DIVI_NAME (e.g. "AMBULIFT BAGDOGRA" → "BAGDOGRA"... 
+    // but city names embedded in division names are tricky; use last word as fallback)
+    let loc = loc_raw;
+    if(!loc && c_div>=0){
+      const divRaw = String(row[c_div]==null?'':row[c_div]).trim();
+      // Try full division string first (might contain city name like "BHS BHUBANESWAR")
+      loc = divRaw;
+    }
+    if(!loc) loc = String(row[1]==null?'':row[1]).trim();
     const monthYear=(c_my>=0?parseMonth(row[c_my],filename):null)||parseMonth(null,filename)||'Unknown';
     const sal_cal_days=c_sd>=0?parseInt(row[c_sd])||31:31;
     const pay_days=c_pd>=0?parseInt(row[c_pd])||sal_cal_days:sal_cal_days;
