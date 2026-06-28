@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Statutory Bonus Calculator — Payment of Bonus Act, 1965</title>
+<title>AI 1 - Statutory Bonus, calculated right.</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -35,22 +35,17 @@
 html{scroll-behavior:smooth;}
 body{background:var(--base);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 
-
-/* ── NAV LOGO ────────────────────────────────────────────────────── */
-.nav-logo{font-family:var(--serif);font-size:17px;color:var(--ink);display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-img{height:40px;width:auto;object-fit:contain;border-radius:6px;padding:3px;background:var(--surface);box-shadow:0 1px 6px rgba(26,23,20,.12),0 0 0 1px var(--border);transition:box-shadow .2s,transform .2s;}
-.nav-logo:hover .nav-logo-img{box-shadow:0 4px 16px rgba(200,101,10,.22),0 0 0 1.5px var(--accent);transform:translateY(-1px);}
-.nav-logo-wordmark{display:flex;flex-direction:column;line-height:1.1;}
-.nav-logo-wordmark-top{font-family:var(--serif);font-size:15px;font-weight:400;color:var(--ink);letter-spacing:.01em;}
-.nav-logo-wordmark-sub{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
-
-
 /* ── NAV ─────────────────────────────────────────────────────────── */
 nav{position:sticky;top:0;z-index:200;background:rgba(247,245,240,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 60px;height:58px;display:flex;align-items:center;justify-content:space-between;}
-
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:44px;height:44px;border-radius:6px;border:1px solid var(--border);background:#ffffff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;box-shadow:0 1px 4px rgba(26,23,20,.08);}
+.nav-logo-icon img{width:100%;height:100%;object-fit:contain;}
+.nav-logo-text{display:flex;flex-direction:column;gap:1px;}
+.nav-logo-name{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.2;}
+.nav-logo-sub{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
 .nav-right{display:flex;align-items:center;gap:28px;}
-.nav-link{font-size:13px;font-weight:500;color:var(--ink-mid);text-decoration:none;transition:color .15s;}
-.nav-link:hover{color:var(--accent);}
+.nav-link{font-size:12px;font-weight:600;color:var(--ink-mid);text-decoration:none;transition:all .15s;padding:6px 13px;border-radius:2px;background:var(--accent-lo);border:1px solid #F0C9A0;letter-spacing:.02em;}
+.nav-link:hover{color:#fff;background:var(--accent);border-color:var(--accent);}
 .nav-btn{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:2px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:background .15s;}
 .nav-btn:hover{background:var(--accent-hi);}
 
@@ -99,112 +94,6 @@ h1 em{font-style:italic;color:var(--accent);}
 .btn-calc:hover:not(:disabled){background:var(--accent-hi);transform:translateY(-1px);}
 .btn-calc:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
-/* ── SETTING TOGGLE ──────────────────────────────────────────────── */
-.setting-pill{
-  display:inline-flex;align-items:center;gap:0;
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  border-radius:40px;
-  padding:5px 6px 5px 14px;
-  cursor:pointer;
-  transition:border-color .25s, box-shadow .25s, background .25s;
-  box-shadow:0 1px 4px rgba(26,23,20,.06);
-  user-select:none;
-}
-.setting-pill:hover{
-  border-color:var(--accent);
-  box-shadow:0 2px 12px rgba(200,101,10,.15);
-}
-.setting-pill.active{
-  background:linear-gradient(135deg,#fff8f2 0%,#fceee2 100%);
-  border-color:var(--accent);
-  box-shadow:0 2px 14px rgba(200,101,10,.18);
-}
-.pill-label{
-  display:flex;flex-direction:column;gap:1px;margin-right:10px;
-}
-.pill-title{
-  font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.01em;white-space:nowrap;
-  transition:color .2s;
-}
-.setting-pill.active .pill-title{color:var(--accent);}
-.pill-mode{
-  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--ink-soft);transition:color .2s;
-}
-.setting-pill.active .pill-mode{color:var(--accent-hi);}
-
-/* The switch itself */
-.pill-switch{
-  position:relative;width:46px;height:26px;flex-shrink:0;
-}
-.pill-switch input{opacity:0;width:0;height:0;position:absolute;}
-.pill-track{
-  position:absolute;inset:0;
-  background:var(--border);
-  border-radius:26px;
-  transition:background .3s;
-  border:1.5px solid rgba(0,0,0,.06);
-}
-.pill-switch input:checked ~ .pill-track{
-  background:linear-gradient(135deg,var(--accent) 0%,var(--accent-hi) 100%);
-  border-color:transparent;
-}
-.pill-knob{
-  position:absolute;
-  top:3px;left:3px;
-  width:18px;height:18px;
-  background:#fff;
-  border-radius:50%;
-  box-shadow:0 1px 5px rgba(0,0,0,.22),0 0 0 1px rgba(0,0,0,.04);
-  transition:transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;
-}
-.pill-switch input:checked ~ .pill-knob{
-  transform:translateX(20px);
-  box-shadow:0 2px 8px rgba(200,101,10,.35),0 0 0 1px rgba(0,0,0,.04);
-}
-/* icon inside knob */
-.pill-knob::after{
-  content:'✕';
-  color:var(--border);
-  font-size:8px;font-weight:900;
-  transition:content .2s,color .2s,opacity .2s;
-  opacity:.7;
-}
-.pill-switch input:checked ~ .pill-knob::after{
-  content:'✓';
-  color:var(--accent);
-  opacity:1;
-}
-
-/* ── INSTRUCTIONS ───────────────────────────────────────────────── */
-.instructions{padding:56px 60px;border-bottom:1px solid var(--border);background:var(--surface);}
-.instr-eyebrow{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.instr-title{font-family:var(--serif);font-size:28px;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px;}
-.instr-sub{font-size:14px;color:var(--ink-mid);margin-bottom:36px;max-width:560px;line-height:1.7;}
-.instr-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px;}
-.instr-step{background:var(--base);border:1px solid var(--border);border-radius:4px;padding:22px 20px;position:relative;transition:border-color .2s,box-shadow .2s;}
-.instr-step:hover{border-color:var(--accent);box-shadow:0 4px 18px rgba(200,101,10,.10);}
-.instr-step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
-.instr-step-icon{font-size:26px;margin-bottom:10px;display:block;}
-.instr-step-title{font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px;letter-spacing:.01em;}
-.instr-step-body{font-size:12px;color:var(--ink-mid);line-height:1.7;}
-.instr-step-body b{color:var(--ink);font-weight:600;}
-.instr-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
-.instr-rule{background:var(--base);border:1px solid var(--border);border-radius:4px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start;}
-.instr-rule-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
-.instr-rule-text{font-size:12px;color:var(--ink-mid);line-height:1.65;}
-.instr-rule-text b{color:var(--ink);font-weight:600;display:block;margin-bottom:2px;}
-.instr-note{background:var(--accent-lo);border:1px solid rgba(200,101,10,.2);border-radius:4px;padding:14px 18px;font-size:12px;color:var(--ink-mid);line-height:1.7;display:flex;gap:10px;align-items:flex-start;}
-.instr-note-icon{font-size:16px;flex-shrink:0;}
-@media(max-width:900px){
-  .instructions{padding:40px 24px;}
-  .instr-steps{grid-template-columns:repeat(2,1fr);}
-  .instr-rules{grid-template-columns:1fr;}
-}
-
 /* ── RESULTS ─────────────────────────────────────────────────────── */
 #results{display:none;padding:0 60px 80px;}
 #results.on{display:block;}
@@ -242,7 +131,7 @@ h1 em{font-style:italic;color:var(--accent);}
 
 /* ── TABLE ───────────────────────────────────────────────────────── */
 .tbl-wrap{border:1px solid var(--border);border-radius:3px;overflow:hidden;overflow-x:auto;}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:1100px;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:1600px;}
 thead{background:var(--base);position:sticky;top:0;z-index:10;}
 th{padding:12px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;transition:color .15s;}
 th:hover{color:var(--accent);}
@@ -280,7 +169,12 @@ tfoot td{background:var(--base);font-weight:700;font-size:12px;color:var(--ink);
 
 /* ── FOOTER ──────────────────────────────────────────────────────── */
 footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink-soft);background:var(--surface);}
-.footer-brand{font-family:var(--serif);font-size:15px;color:var(--ink);}
+.footer-brand{display:flex;align-items:center;gap:10px;}
+.footer-brand-icon{width:36px;height:36px;border-radius:6px;border:1px solid var(--border);background:#ffffff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:3px;box-shadow:0 1px 4px rgba(26,23,20,.08);}
+.footer-brand-icon img{width:100%;height:100%;object-fit:contain;}
+.footer-brand-text{display:flex;flex-direction:column;gap:1px;}
+.footer-brand-name{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--ink);line-height:1.2;}
+.footer-brand-sub{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
 
 /* ── RESPONSIVE ──────────────────────────────────────────────────── */
 @media(max-width:900px){
@@ -293,25 +187,49 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
   .result-header{flex-direction:column;}
   footer{padding:18px 24px;flex-direction:column;gap:6px;text-align:center;}
 }
+/* ── MODAL ───────────────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,23,20,.55);z-index:500;display:none;align-items:flex-start;justify-content:center;padding:60px 20px 20px;backdrop-filter:blur(4px);}
+.modal-overlay.on{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;width:100%;max-width:900px;max-height:80vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);animation:modalIn .2s ease;}
+@keyframes modalIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);}
+.modal-title{font-family:var(--serif);font-size:20px;color:var(--ink);}
+.modal-close{background:none;border:none;color:var(--ink-soft);font-size:20px;cursor:pointer;padding:4px 8px;transition:color .15s;}
+.modal-close:hover{color:var(--red);}
+.modal-body{overflow-y:auto;padding:20px 24px;}
+.modal-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;}
+.modal-tbl th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);padding:9px 12px;border-bottom:1px solid var(--border);background:var(--base);}
+.modal-tbl td{padding:9px 12px;border-bottom:1px solid rgba(226,218,208,.5);color:var(--ink);}
+.modal-tbl tbody tr:hover td{background:var(--accent-lo);}
+.modal-tbl tr:last-child td{border-bottom:none;}
+.skill-badge{display:inline-block;padding:2px 9px;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:.04em;}
+.sk-hs{background:#EDE9FE;color:#5B21B6;}
+.sk-sk{background:var(--green-lo);color:var(--green);}
+.sk-ss{background:var(--blue-lo);color:var(--blue);}
+.sk-un{background:var(--accent-lo);color:var(--accent);}
+.modal-section-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;margin-top:16px;padding-bottom:4px;border-bottom:1px solid var(--border);}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="https://threedis.com" target="_blank" class="nav-logo"><img src="data:image/jpeg;base64,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" alt="Three D Integrated Solutions" class="nav-logo-img"/><span class="nav-logo-wordmark"><span class="nav-logo-wordmark-top">Three D Integrated Solutions Ltd.</span><span class="nav-logo-wordmark-sub">Statutory Bonus Calculator</span></span></a>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon"><img src="data:image/png;base64,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" alt="Three D"/></div>
+    <div class="nav-logo-text"><div class="nav-logo-name">Three D Integrated Solutions Ltd.</div><div class="nav-logo-sub">Statutory Bonus Calculator</div></div>
+  </a>
   <div class="nav-right">
-    <a href="#results" class="nav-link">Register</a>
-<button class="nav-btn" onclick="document.getElementById('file-input').click()">Upload Files</button>
+    <a href="#" class="nav-link" onclick="openModal('modal-skill');return false;">Skill Mapped</a>
+    <a href="#" class="nav-link" onclick="openModal('modal-mw');return false;">MW Registered</a>
+    <a href="#" class="nav-link" onclick="openModal('modal-area');return false;">Area Included</a>
   </div>
 </nav>
-
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
     <p class="eyebrow" style="margin-bottom:4px">Payment of Bonus Act, 1965</p>
-    <h1>Statutory Bonus,<br/><em>calculated right.</em></h1>
+    <h1><span style="font-family:var(--sans);font-weight:800;color:#1A3A6B;letter-spacing:-.02em;font-style:normal;font-size:inherit;">AI-1</span><span style="font-family:var(--sans);font-weight:300;color:#C0B9B0;margin:0 10px;font-style:normal;font-size:inherit;">|</span>Statutory Bonus,<br/><em>calculated right.</em></h1>
     <p class="hero-desc">Upload one monthly salary register or all twelve. Eligibility, minimum wages, LOP pro-ration — computed automatically. Download a compliance-ready Excel register.</p>
     <div class="hero-stats">
       <div class="hstat">
@@ -359,73 +277,6 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
   </div>
 </section>
 
-<!-- INSTRUCTIONS -->
-<section class="instructions">
-  <p class="instr-eyebrow">How it works</p>
-  <h2 class="instr-title">Four steps to your Bonus Register</h2>
-  <p class="instr-sub">Follow these steps to calculate statutory bonus for your employees under the Payment of Bonus Act, 1965. The tool handles eligibility, minimum wages, and LOP pro-ration automatically.</p>
-
-  <div class="instr-steps">
-    <div class="instr-step">
-      <div class="instr-step-num">1</div>
-      <span class="instr-step-icon">📋</span>
-      <div class="instr-step-title">Prepare Your Salary Register</div>
-      <div class="instr-step-body">Ensure your Excel file has these columns:<br/><b>Emp ID · Employee Name · Designation · Basic (Th) · VDA (Th) · Sal Cal Days · Pay Days · Location · Month/Year</b></div>
-    </div>
-    <div class="instr-step">
-      <div class="instr-step-num">2</div>
-      <span class="instr-step-icon">📤</span>
-      <div class="instr-step-title">Upload Monthly Files</div>
-      <div class="instr-step-body">Upload <b>one file per month</b> (Apr–Mar financial year). You can upload all 12 months at once. Files must be in <b>.xlsx</b> format. Drag &amp; drop or click to browse.</div>
-    </div>
-    <div class="instr-step">
-      <div class="instr-step-num">3</div>
-      <span class="instr-step-icon">⚡</span>
-      <div class="instr-step-title">Calculate</div>
-      <div class="instr-step-body">Click <b>Calculate Bonus Register</b>. The tool auto-detects each employee's <b>Area (A/B/C)</b>, <b>Skill level</b>, and applicable <b>Construction MW rate</b>. Bonus is computed at <b>8.33%</b> of prorated MW.</div>
-    </div>
-    <div class="instr-step">
-      <div class="instr-step-num">4</div>
-      <span class="instr-step-icon">⬇</span>
-      <div class="instr-step-title">Review &amp; Download</div>
-      <div class="instr-step-body">Filter by month, area, or eligibility. Use the <b>month picker</b> to view specific periods. Click <b>Download Excel</b> to export a compliance-ready bonus register.</div>
-    </div>
-  </div>
-
-  <p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;">Key Rules Applied Automatically</p>
-  <div class="instr-rules">
-    <div class="instr-rule">
-      <span class="instr-rule-icon">✅</span>
-      <div class="instr-rule-text"><b>Eligibility Check</b>Basic (Th) + VDA (Th) must be &gt; ₹0 and &lt; <b>₹21,000/month</b> to qualify for bonus under the Act.</div>
-    </div>
-    <div class="instr-rule">
-      <span class="instr-rule-icon">📍</span>
-      <div class="instr-rule-text"><b>Area Classification</b>Employee's location is auto-mapped to <b>Area A, B, or C</b> as per CLC city schedule, determining the applicable minimum wage rate.</div>
-    </div>
-    <div class="instr-rule">
-      <span class="instr-rule-icon">🔧</span>
-      <div class="instr-rule-text"><b>Skill Mapping</b>Designation is mapped to <b>Unskilled / Semi-Skilled / Skilled / Highly Skilled</b> using the Construction &amp; Maintenance schedule (CLC).</div>
-    </div>
-    <div class="instr-rule">
-      <span class="instr-rule-icon">📅</span>
-      <div class="instr-rule-text"><b>Period-wise MW</b>Minimum wages are picked from the correct <b>6-month CLC period</b> (Apr–Sep or Oct–Mar) based on the month of the salary register.</div>
-    </div>
-    <div class="instr-rule">
-      <span class="instr-rule-icon">📐</span>
-      <div class="instr-rule-text"><b>LOP Pro-ration</b>Minimum wages are prorated: <b>MW ÷ Sal Cal Days × Pay Days</b>, then floored (ROUNDDOWN). Accounts for Loss of Pay days automatically.</div>
-    </div>
-    <div class="instr-rule">
-      <span class="instr-rule-icon">💰</span>
-      <div class="instr-rule-text"><b>Bonus Calculation</b><b>Bonus = Round(Prorated MW × 8.33%, 0)</b>. Applied only to eligible employees. Ineligible employees show — in the bonus column.</div>
-    </div>
-  </div>
-
-  <div class="instr-note">
-    <span class="instr-note-icon">ℹ️</span>
-    <span><b>File format tip:</b> The tool auto-detects the correct sheet and header row. Month/Year can be in the filename (e.g. <b>April_2024.xlsx</b>) or in a dedicated column. Rows with item counts (e.g. <em>Feb/Item:06</em>) and month-header rows are automatically skipped.</span>
-  </div>
-</section>
-
 <!-- RESULTS -->
 <section id="results">
   <div class="result-rule"></div>
@@ -435,17 +286,6 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
       <div class="result-meta" id="result-meta">—</div>
     </div>
     <div class="result-actions">
-      <label class="setting-pill" id="setting-row" for="toggle-above21k">
-        <div class="pill-label">
-          <span class="pill-title">Bonus above ₹21,000</span>
-          <span class="pill-mode" id="setting-desc">Statutory Mode</span>
-        </div>
-        <div class="pill-switch">
-          <input type="checkbox" id="toggle-above21k" onchange="reCalcWithSetting()"/>
-          <div class="pill-track"></div>
-          <div class="pill-knob"></div>
-        </div>
-      </label>
       <button class="btn-dl" onclick="downloadExcel()">⬇ Download Excel</button>
       <button class="btn-reset" onclick="resetAll()">↺ New Calculation</button>
     </div>
@@ -483,19 +323,22 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
         <th class="td-sno" onclick="sortTbl(0)">#</th>
         <th onclick="sortTbl(1)">Employee ID</th>
         <th onclick="sortTbl(2)">Employee Name</th>
-        <th onclick="sortTbl(3)">Month/Year</th>
-        <th onclick="sortTbl(4)">Designation</th>
-        <th onclick="sortTbl(5)">Skill</th>
-        <th onclick="sortTbl(6)">Location</th>
-        <th onclick="sortTbl(7)">Area</th>
-        <th class="td-num" onclick="sortTbl(8)">Basic (Th) ₹</th>
-        <th class="td-num" onclick="sortTbl(9)">VDA (Th) ₹</th>
-        <th class="td-num" onclick="sortTbl(10)">Min Wages ₹</th>
-        <th class="td-num" onclick="sortTbl(11)">Cal Days</th>
-        <th class="td-num" onclick="sortTbl(12)">Pay Days</th>
-        <th class="td-num" onclick="sortTbl(13)">Prorated MW ₹</th>
-        <th onclick="sortTbl(14)">Eligible</th>
-        <th class="td-num" onclick="sortTbl(15)">Bonus (8.33%) ₹</th>
+        <th onclick="sortTbl(3)">D.O.J</th>
+        <th onclick="sortTbl(4)">Pay Date</th>
+        <th class="td-num" onclick="sortTbl(5)">Days in Month</th>
+        <th class="td-num" onclick="sortTbl(6)">Basic &#8377;</th>
+        <th class="td-num" onclick="sortTbl(7)">VDA &#8377;</th>
+        <th class="td-num" onclick="sortTbl(8)">Fixed Basic+DA &#8377;</th>
+        <th class="td-num" onclick="sortTbl(9)">Paid Days</th>
+        <th onclick="sortTbl(10)">Eligibility Criteria</th>
+        <th onclick="sortTbl(11)">Divi_Name</th>
+        <th onclick="sortTbl(12)">DSG_Name</th>
+        <th onclick="sortTbl(13)">App Govt</th>
+        <th onclick="sortTbl(14)">Area</th>
+        <th onclick="sortTbl(15)">Category</th>
+        <th class="td-num" onclick="sortTbl(16)">Min Wages &#8377;</th>
+        <th class="td-num" onclick="sortTbl(17)">Ern Bonus Wages &#8377;</th>
+        <th class="td-num" onclick="sortTbl(18)">Bonus &#8377;</th>
       </tr></thead>
       <tbody id="tbl-body"></tbody>
       <tfoot id="tbl-foot"></tfoot>
@@ -512,661 +355,482 @@ footer{border-top:1px solid var(--border);padding:22px 60px;display:flex;justify
 <div class="toast-wrap" id="toast-wrap"></div>
 
 <script>
-
-
-/* ══════════════════════════════════════════════════════════════════
-   MINIMUM WAGES TABLE — Central Govt (all periods)
-   Key: [period_start_month_idx] where 0=Apr, 6=Oct
-══════════════════════════════════════════════════════════════════ */
-const MW_PERIODS = [
-  // Construction & Maintenance schedule (CLC) — monthly = daily × 26
-  // Source: CLC Guideline notifications (Apr periods from official PDFs; Oct periods from CLC orders)
-  [4,2022,  9,2022,  {A:{UNSKILLED:18869,SEMISKI:20903,SKILLED:22568,HIGHSKI:24826}, B:{UNSKILLED:15994,SEMISKI:18647,SKILLED:20020,HIGHSKI:22027}, C:{UNSKILLED:12116,SEMISKI:14144,SKILLED:17108,HIGHSKI:20020}}],
-  [10,2022, 3,2023,  {A:{UNSKILLED:19291,SEMISKI:21372,SKILLED:23088,HIGHSKI:25397}, B:{UNSKILLED:16354,SEMISKI:19066,SKILLED:20488,HIGHSKI:22540}, C:{UNSKILLED:12402,SEMISKI:14482,SKILLED:17446,HIGHSKI:20488}}],
-  // Apr 2023 — Guideline_23-24.pdf (w.e.f. 01.04.2023): daily A=736/816/897/973, B=616/695/816/897, C=494/577/695/816
-  [4,2023,  9,2023,  {A:{UNSKILLED:19136,SEMISKI:21216,SKILLED:23322,HIGHSKI:25298}, B:{UNSKILLED:16016,SEMISKI:18070,SKILLED:21216,HIGHSKI:23322}, C:{UNSKILLED:12844,SEMISKI:15002,SKILLED:18070,HIGHSKI:21216}}],
-  [10,2023, 3,2024,  {A:{UNSKILLED:20018,SEMISKI:22172,SKILLED:24390,HIGHSKI:26827}, B:{UNSKILLED:16970,SEMISKI:19824,SKILLED:21272,HIGHSKI:23396}, C:{UNSKILLED:13318,SEMISKI:15518,SKILLED:18596,HIGHSKI:21488}}],
-  // Apr 2024 — Guideline_24-25.pdf (w.e.f. 01.04.2024): daily A=778/862/948/1028, B=651/734/862/948, C=522/610/734/862
-  [4,2024,  9,2024,  {A:{UNSKILLED:20228,SEMISKI:22412,SKILLED:24648,HIGHSKI:26728}, B:{UNSKILLED:16926,SEMISKI:19084,SKILLED:22412,HIGHSKI:24648}, C:{UNSKILLED:13572,SEMISKI:15860,SKILLED:19084,HIGHSKI:22412}}],
-  // Oct 2024 — PIB Press Release + CLC PDF (w.e.f. 01.10.2024): daily A=783/868/954/1035, B=655/739/868/954, C=526/614/739/868
-  [10,2024, 3,2025,  {A:{UNSKILLED:20358,SEMISKI:22568,SKILLED:24804,HIGHSKI:26910}, B:{UNSKILLED:17030,SEMISKI:19214,SKILLED:22568,HIGHSKI:24804}, C:{UNSKILLED:13676,SEMISKI:15964,SKILLED:19214,HIGHSKI:22568}}],
-  // Apr 2025 — Guideline_25-26.pdf (w.e.f. 01.04.2025): daily A=805/893/981/1065, B=674/760/893/981, C=541/632/760/893
-  [4,2025,  9,2025,  {A:{UNSKILLED:20930,SEMISKI:23218,SKILLED:25506,HIGHSKI:27690}, B:{UNSKILLED:17524,SEMISKI:19760,SKILLED:23218,HIGHSKI:25506}, C:{UNSKILLED:14066,SEMISKI:16432,SKILLED:19760,HIGHSKI:23218}}],
+/* MW - Central Govt */
+const MW_PERIODS=[
+  // CLC Construction & Maintenance schedule - Monthly = Daily x 26 working days
+  // Basic (fixed/day): A-Unsk=523,Semi=579,Sk=637,Hi=693 | B-Unsk=437,Semi=494,Sk=579,Hi=637 | C-Unsk=350,Semi=410,Sk=494,Hi=579
+  [4,2023,9,2023,{A:{UNSKILLED:19136,SEMISKI:21216,SKILLED:23322,HIGHSKI:25298},B:{UNSKILLED:16016,SEMISKI:18070,SKILLED:21216,HIGHSKI:23322},C:{UNSKILLED:12844,SEMISKI:15002,SKILLED:18070,HIGHSKI:21216}}],
+  [10,2023,3,2024,{A:{UNSKILLED:19526,SEMISKI:21632,SKILLED:23790,HIGHSKI:25792},B:{UNSKILLED:16328,SEMISKI:18434,SKILLED:21632,HIGHSKI:23790},C:{UNSKILLED:13104,SEMISKI:15314,SKILLED:18434,HIGHSKI:21632}}],
+  [4,2024,9,2024,{A:{UNSKILLED:20228,SEMISKI:22412,SKILLED:24648,HIGHSKI:26728},B:{UNSKILLED:16926,SEMISKI:19084,SKILLED:22412,HIGHSKI:24648},C:{UNSKILLED:13572,SEMISKI:15860,SKILLED:19084,HIGHSKI:22412}}],
+  [10,2024,3,2025,{A:{UNSKILLED:20358,SEMISKI:22568,SKILLED:24804,HIGHSKI:26910},B:{UNSKILLED:17030,SEMISKI:19214,SKILLED:22568,HIGHSKI:24804},C:{UNSKILLED:13676,SEMISKI:15964,SKILLED:19214,HIGHSKI:22568}}],
+  [4,2025,9,2025,{A:{UNSKILLED:20930,SEMISKI:23218,SKILLED:25506,HIGHSKI:27690},B:{UNSKILLED:17524,SEMISKI:19760,SKILLED:23218,HIGHSKI:25506},C:{UNSKILLED:14066,SEMISKI:16432,SKILLED:19760,HIGHSKI:23218}}],
+  [10,2025,3,2026,{A:{UNSKILLED:20930,SEMISKI:23218,SKILLED:25506,HIGHSKI:27690},B:{UNSKILLED:17524,SEMISKI:19760,SKILLED:23218,HIGHSKI:25506},C:{UNSKILLED:14066,SEMISKI:16432,SKILLED:19760,HIGHSKI:23218}}],
+  [4,2026,9,2026,{A:{UNSKILLED:21502,SEMISKI:23868,SKILLED:26208,HIGHSKI:28444},B:{UNSKILLED:18018,SEMISKI:20306,SKILLED:23868,HIGHSKI:26208},C:{UNSKILLED:14456,SEMISKI:16900,SKILLED:20306,HIGHSKI:23868}}],
 ];
+/* MW - Haryana State (Construction & Maintenance) W.E.F.01-01-2025; Rule: EmpID[0:2]==="HO" */
+const MW_HARYANA=[[1,2025,12,2099,{UNSKILLED:11257.12,SEMISKIA:11819.94,SEMISKIB:12410.91,SKILLEDA:13031.47,SKILLEDB:13683.06,HIGHSKI:14367.21}]];
+/* MW - Tamil Nadu State (Construction & Maintenance) W.E.F.01-10-2024; Rule: Branch contains Chennai */
+const MW_TAMILNADU=[[10,2024,12,2099,{UNSKILLED:14656.72,SEMISKI:15567.76,SKILLED:16986.32,HIGHSKI:18404.88}]];
 
-function getMW(area, skill, monthYear) {
-  if (!monthYear) return 0;
-  const parts = monthYear.split('-');
-  const MNAMES = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
-  const mo = MNAMES[parts[0]];
-  const yr = parseInt(parts[1]);
-  if (!mo || !yr) return 0;
-  const sk = normaliseSkill(skill);
-  const ar = area || 'C';
-  for (const [fm,fy,tm,ty,table] of MW_PERIODS) {
-    const start = fy*12+fm, end = ty*12+tm, cur = yr*12+mo;
-    if (cur >= start && cur <= end) {
-      return (table[ar] || table['C'])[sk] || 0;
-    }
+function isHaryanaEmp(id){return (id||'').toUpperCase().substring(0,2)==='HO';}
+function isChennaiEmp(branch){return (branch||'').toLowerCase().includes('chennai');}
+
+function getMW(area,skill,monthYear,empId,branch){
+  if(!monthYear)return 0;
+  const p=monthYear.split('-'),MN={Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+  const mo=MN[p[0]],yr=parseInt(p[1]);if(!mo||!yr)return 0;
+  if(isHaryanaEmp(empId)){
+    const k=normSkillH(skill);
+    for(const[fm,fy,tm,ty,t]of MW_HARYANA){if(yr*12+mo>=fy*12+fm&&yr*12+mo<=ty*12+tm)return t[k]||0;}
+    return MW_HARYANA[MW_HARYANA.length-1][4][normSkillH(skill)]||0;
   }
-  // fallback: use latest period
-  const last = MW_PERIODS[MW_PERIODS.length-1][4];
-  return (last[ar] || last['C'])[normaliseSkill(skill)] || 0;
+  if(isChennaiEmp(branch)){
+    const k=normSkill(skill);
+    for(const[fm,fy,tm,ty,t]of MW_TAMILNADU){if(yr*12+mo>=fy*12+fm&&yr*12+mo<=ty*12+tm)return t[k]||0;}
+    return MW_TAMILNADU[MW_TAMILNADU.length-1][4][normSkill(skill)]||0;
+  }
+  const k=normSkill(skill),ar=area||'C';
+  for(const[fm,fy,tm,ty,t]of MW_PERIODS){if(yr*12+mo>=fy*12+fm&&yr*12+mo<=ty*12+tm)return(t[ar]||t['C'])[k]||0;}
+  const last=MW_PERIODS[MW_PERIODS.length-1][4];return(last[ar]||last['C'])[normSkill(skill)]||0;
+}
+function normSkill(s){const u=(s||'').toUpperCase().replace(/[-\s]+/g,'');if(u.includes('HIGHLY')||u.includes('HIGH'))return 'HIGHSKI';if(u.includes('SEMI'))return 'SEMISKI';if(u==='UNSKILLED'||u==='UNSKILL')return 'UNSKILLED';if(u.includes('SKILL'))return 'SKILLED';return 'UNSKILLED';}
+function normSkillH(s){const u=(s||'').toUpperCase().replace(/[-\s]+/g,'');if(u.includes('HIGHLY')||u.includes('HIGH'))return 'HIGHSKI';if(u.includes('SEMI'))return 'SEMISKIB';if(u==='UNSKILLED'||u==='UNSKILL')return 'UNSKILLED';if(u.includes('SKILL'))return 'SKILLEDB';return 'UNSKILLED';}
+
+/* AREA */
+const AREA_A=['ahmedabad','bangalore','chennai','delhi','gurgaon','hyderabad','kolkata','lucknow','mumbai','nagpur','pune','kanpur'];
+const AREA_B=['amritsar','aurangabad','bhopal','bhubaneshwar','bhubneshwar','calicut','kozhikode','chandigarh','coimbatore','dehradun','goa','guwahati','indore','jaipur','jammu','jodhpur','kochi','madurai','mangalore','meerut','raipur','ranchi','srinagar','surat','trichy','tiruchirappalli','trivandrum','thiruvananthapuram','vadodara','varanasi','vizag','visakhapatnam','gorakhpur','hubli','jamnagar','patna','port blair','rajkot','siliguri','vijayawada','vijaywada','belgaum','belagavi'];
+function getArea(loc){const l=(loc||'').toLowerCase().trim();if(AREA_A.some(a=>l.includes(a)))return 'A';if(AREA_B.some(b=>l.includes(b)))return 'B';return 'C';}
+
+/* SKILL MAP */
+const SKILL_MAP={'OPERATOR-BHS':'Skilled','SITE INCHARGE':'Highly Skilled','JUNIOR TECHNICIAN':'Semi-Skilled','TECHNICIAN-O&M':'Skilled','JR. TECHNICIAN -O&M':'Semi-Skilled','TECHNICIAN':'Skilled','HELPER':'Unskilled','TECHNICIAN CUM DRIVER':'Skilled','DRIVER/ATTENDANT':'Semi-Skilled','ATTENDANT/HELPER':'Semi-Skilled','ATTENDANT':'Semi-Skilled','SUPERVISOR':'Highly Skilled','ENGINEER':'Highly Skilled','SR. TECHNICIAN-O&M':'Highly Skilled'};
+function getSkill(desig){
+  const d=(desig||'').toUpperCase().trim();
+  if(SKILL_MAP[d])return SKILL_MAP[d];
+  for(const[k,v]of Object.entries(SKILL_MAP)){if(d===k||d.includes(k)||k.includes(d))return v;}
+  const dl=d.toLowerCase();
+  if(dl.includes('supervisor')||dl.includes('incharge')||dl.includes('engineer')||dl.includes('manager'))return 'Highly Skilled';
+  if(dl.includes('technician')||dl.includes('operator'))return 'Skilled';
+  if(dl.includes('helper'))return 'Unskilled';
+  return 'Semi-Skilled';
 }
 
-function normaliseSkill(skill) {
-  const s = (skill||'').toUpperCase().replace(/[-\s]+/g,'');
-  if (s.includes('HIGHLY') || s.includes('HIGH')) return 'HIGHSKI';
-  if (s.includes('SEMI')) return 'SEMISKI';
-  if (s.includes('UN')) return 'UNSKILLED';   // must check UN before SKILL (UNSKILLED contains SKILL)
-  if (s.includes('SKILL')) return 'SKILLED';
-  return 'UNSKILLED';
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   AREA MAPPING
-══════════════════════════════════════════════════════════════════ */
-const AREA_A = ['ahmedabad','bangalore','chennai','delhi','gurgaon','hyderabad','kolkata','lucknow','mumbai','nagpur','pune','kanpur'];
-const AREA_B = [
-  'amritsar','aurangabad','bhopal',
-  'bhubaneswar','bhubaneshwar','bhubneshwar','bhuvaneswar',  // all Bhubaneswar spellings
-  'calicut','kozhikode',
-  'chandigarh','chandigargh',   // company uses 'chandigargh'
-  'coimbatore','dehradun','goa','guwahati','indore',
-  'jaipur','jammu','jodhpur','kochi','madurai','mangalore','meerut',
-  'raipur','ranchi',
-  'srinagar','shrinagar',       // company uses 'shrinagar'
-  'surat','trichy','tiruchirappalli','trivandrum','thiruvananthapuram',
-  'vadodara','vadodra',         // company uses 'vadodra'
-  'varanasi','vizag','visakhapatnam',
-  'gorakhpur','hubli','jamnagar','patna','port blair','rajkot',
-  'siliguri','vijayawada','vijaywada','belgaum','belagavi'
-];
-const AREA_C = ['bathinda','dibrugarh','gaya','khajuraho','tirupati','udaipur','agartala'];
-
-function getArea(loc) {
-  const l = (loc||'').toLowerCase().replace(/ new$| old$/,'').trim();
-  if (AREA_A.some(a => l.includes(a))) return 'A';
-  if (AREA_B.some(b => l.includes(b))) return 'B';
-  if (AREA_C.some(c => l.includes(c))) return 'C';
-  return 'C'; // default
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   SKILL MAPPING
-══════════════════════════════════════════════════════════════════ */
-const SKILL_MAP = {
-  'OPERATOR-BHS':        'Skilled',
-  'SITE INCHARGE':       'Highly Skilled',
-  'JUNIOR TECHNICIAN':   'Semi-Skilled',
-  'TECHNICIAN-O&M':      'Skilled',
-  'JR. TECHNICIAN -O&M': 'Semi-Skilled',
-  'TECHNICIAN':          'Skilled',
-  'HELPER':              'Unskilled',
-  'TECHNICIAN CUM DRIVER':'Skilled',
-  'DRIVER/ATTENDANT':    'Semi-Skilled',
-  'ATTENDANT/HELPER':    'Semi-Skilled',
-  'ATTENDANT':           'Semi-Skilled',
-  'ENGINEER':            'Highly Skilled',
-  'SR. ENGINEER':        'Highly Skilled',
-  'SENIOR ENGINEER':     'Highly Skilled',
-  'JR. ENGINEER':        'Highly Skilled',
-  'JUNIOR ENGINEER':     'Highly Skilled',
-  'SITE ENGINEER':       'Highly Skilled',
-  'FIELD ENGINEER':      'Highly Skilled',
-  'PROJECT ENGINEER':    'Highly Skilled',
-};
-
-function getSkill(desig) {
-  const d = (desig||'').toUpperCase().trim();
-  if (SKILL_MAP[d]) return SKILL_MAP[d];
-  for (const [k,v] of Object.entries(SKILL_MAP)) {
-    if (d.includes(k) || k.includes(d)) return v;
-  }
-  const dl = d.toLowerCase();
-  if (dl.includes('engineer')) return 'Highly Skilled';
-  if (dl.includes('technician')) return 'Skilled';
-  if (dl.includes('helper')) return 'Unskilled';
-  return 'Semi-Skilled';  // default for Attendant, Driver/Attendant variants
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   MONTH PARSING
-══════════════════════════════════════════════════════════════════ */
-const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-function parseMonth(val, filename) {
-  if (!val && !filename) return null;
-  // JS Date
-  if (val instanceof Date) return `${MON[val.getMonth()]}-${val.getFullYear()}`;
-  if (typeof val === 'number' && val > 40000 && val < 60000) {
-    const d = new Date(Math.round((val - 25569)*86400*1000));
-    return `${MON[d.getUTCMonth()]}-${d.getUTCFullYear()}`;
-  }
-  const s = String(val||'').trim();
-  let m = s.match(/^(\d{4})-(\d{2})/);
-  if (m) return `${MON[parseInt(m[2])-1]}-${m[1]}`;
-  m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
-  if (m) return `${MON[parseInt(m[2])-1]}-${m[3]}`;
-  m = s.match(/([A-Za-z]{3})[\/\-\s](\d{4})/);
-  if (m) return `${m[1].charAt(0).toUpperCase()+m[1].slice(1).toLowerCase()}-${m[2]}`;
-  // From filename
-  const fn = (filename||'').toLowerCase();
-  const MONTHS_MAP = {january:'Jan',february:'Feb',march:'Mar',april:'Apr',may:'May',june:'Jun',july:'Jul',august:'Aug',september:'Sep',october:'Oct',november:'Nov',december:'Dec',jan:'Jan',feb:'Feb',mar:'Mar',apr:'Apr',jun:'Jun',jul:'Jul',aug:'Aug',sep:'Sep',oct:'Oct',nov:'Nov',dec:'Dec'};
-  for (const [k,v] of Object.entries(MONTHS_MAP)) {
-    if (fn.includes(k)) {
-      const ym = fn.match(/20\d{2}/);
-      return ym ? `${v}-${ym[0]}` : v;
-    }
-  }
+/* MONTH PARSE */
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function parseMonth(val,filename){
+  if(!val&&!filename)return null;
+  if(val instanceof Date)return `${MON[val.getMonth()]}-${val.getFullYear()}`;
+  if(typeof val==='number'&&val>40000&&val<60000){const d=new Date(Math.round((val-25569)*86400*1000));return `${MON[d.getUTCMonth()]}-${d.getUTCFullYear()}`;}
+  const s=String(val||'').trim();
+  let m=s.match(/^(\d{4})-(\d{2})/);if(m)return `${MON[parseInt(m[2])-1]}-${m[1]}`;
+  m=s.match(/^(\d{2})\/(\d{2})\/(\d{4})/);if(m)return `${MON[parseInt(m[2])-1]}-${m[3]}`;
+  m=s.match(/([A-Za-z]{3})[\/\-\s](\d{4})/);if(m)return `${m[1].charAt(0).toUpperCase()+m[1].slice(1).toLowerCase()}-${m[2]}`;
+  const fn=(filename||'').toLowerCase();
+  const MM={january:'Jan',february:'Feb',march:'Mar',april:'Apr',may:'May',june:'Jun',july:'Jul',august:'Aug',september:'Sep',october:'Oct',november:'Nov',december:'Dec',jan:'Jan',feb:'Feb',mar:'Mar',apr:'Apr',jun:'Jun',jul:'Jul',aug:'Aug',sep:'Sep',oct:'Oct',nov:'Nov',dec:'Dec'};
+  for(const[k,v]of Object.entries(MM)){if(fn.includes(k)){const y=fn.match(/20\d{2}/);return y?`${v}-${y[0]}`:v;}}
   return null;
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   FUZZY COLUMN FINDER
-══════════════════════════════════════════════════════════════════ */
-function norm(s){ return String(s||'').trim().toLowerCase().replace(/[\s._\-\/]+/g,''); }
+/* COLUMN FINDER */
+function norm(s){return String(s||'').trim().toLowerCase().replace(/[\s._\-\/]+/g,'');}
+function gc(hl,...aa){for(const a of aa){const k=norm(a);if(!k)continue;let i=hl.findIndex(h=>h&&h===k);if(i>=0)return i;if(k.length>=3){i=hl.findIndex(h=>h&&h.length>=3&&h.startsWith(k));if(i>=0)return i;}if(k.length>=4){i=hl.findIndex(h=>h&&h.includes(k));if(i>=0)return i;}}return -1;}
 
-function gc(headersLC, ...aliases) {
-  for (const alias of aliases) {
-    const key = norm(alias);
-    if (!key) continue;
-    let idx = headersLC.findIndex(h => h && h === key);
-    if (idx >= 0) return idx;
-    if (key.length >= 3) {
-      idx = headersLC.findIndex(h => h && h.length >= 3 && h.startsWith(key));
-      if (idx >= 0) return idx;
-    }
-    if (key.length >= 4) {
-      idx = headersLC.findIndex(h => h && h.includes(key));
-      if (idx >= 0) return idx;
-    }
-  }
-  return -1;
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   FILE READER
-══════════════════════════════════════════════════════════════════ */
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      try {
-        // Use raw:true to avoid XLSX.js misinterpreting quotePrefix cells and date formats
-        const wb = XLSX.read(e.target.result, {type:'array', cellDates:false, cellNF:false, cellText:false});
-        // Find sheet with employee salary rows (Emp ID column with alphanumeric IDs)
-        const prefs = ['salary export','salary','payroll','data','export','sheet1'];
-        let sheet = null;
-        for (const n of wb.SheetNames) { if (prefs.includes(n.toLowerCase().trim())) { sheet=n; break; } }
-        if (!sheet) {
-          // Scan sheets — look for a row that has 'Emp ID' header OR alphanumeric IDs in col 1-5
-          for (const n of wb.SheetNames) {
-            const ws = wb.Sheets[n];
-            if (!ws['!ref']) continue;
-            const rng = XLSX.utils.decode_range(ws['!ref']);
-            let found = false;
-            outer: for(let r=rng.s.r; r<=Math.min(rng.e.r, rng.s.r+60); r++) {
-              for(let c=rng.s.c; c<=Math.min(rng.e.c, rng.s.c+10); c++) {
-                const cell = ws[XLSX.utils.encode_cell({r, c})];
-                if (!cell || !cell.v) continue;
-                const v = String(cell.v).trim();
-                // Match typical employee ID patterns: AMB*, BHS*, alphanumeric 4+ chars
-                if (/^[A-Z]{2,6}[-]?[A-Z0-9]{2,}/i.test(v) && v.length >= 4 && v.length <= 20) {
-                  found = true; break outer;
-                }
+/* FILE READER */
+function readFile(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      try{
+        const wb=XLSX.read(e.target.result,{type:'array',cellDates:false,cellNF:false,cellText:false});
+        const prefs=['salary export','salary','payroll','data','export','sheet1'];
+        let sheet=null;
+        for(const n of wb.SheetNames){if(prefs.includes(n.toLowerCase().trim())){sheet=n;break;}}
+        if(!sheet){
+          for(const n of wb.SheetNames){
+            const ws=wb.Sheets[n];if(!ws['!ref'])continue;
+            const rng=XLSX.utils.decode_range(ws['!ref']);let found=false;
+            outer:for(let r=rng.s.r;r<=Math.min(rng.e.r,rng.s.r+60);r++){
+              for(let c=rng.s.c;c<=Math.min(rng.e.c,rng.s.c+10);c++){
+                const cell=ws[XLSX.utils.encode_cell({r,c})];if(!cell||!cell.v)continue;
+                const v=String(cell.v).trim();if(/^[A-Z]{2,6}[-]?[A-Z0-9]{2,}/i.test(v)&&v.length>=4&&v.length<=20){found=true;break outer;}
               }
             }
-            if (found) { sheet = n; break; }
+            if(found){sheet=n;break;}
           }
         }
-        if(!sheet) sheet=wb.SheetNames[0];
-        const ws = wb.Sheets[sheet];
-        const rng = XLSX.utils.decode_range(ws['!ref']||'A1');
-        const R=rng.e.r-rng.s.r+1, C=rng.e.c-rng.s.c+1;
-        const raw=[];
+        if(!sheet)sheet=wb.SheetNames[0];
+        const ws=wb.Sheets[sheet];const rng=XLSX.utils.decode_range(ws['!ref']||'A1');
+        const R=rng.e.r-rng.s.r+1,C=rng.e.c-rng.s.c+1,raw=[];
         for(let r=0;r<R;r++){
           const row=new Array(C).fill(null);
           for(let c=0;c<C;c++){
-            const addr=XLSX.utils.encode_cell({r:rng.s.r+r,c:rng.s.c+c});
-            const cell=ws[addr];
-            if(!cell||cell.v==null) continue;
-            if(cell.t==='n'){
-              // Check if it's a date serial — numFmtId 14-17 and 22 are date formats
-              const numFmtId = (cell.s && ws['!data'] && ws['!data'][rng.s.r+r] && ws['!data'][rng.s.r+r][rng.s.c+c]) ? 0 : 0;
-              const isDateFmt = cell.w && /^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(cell.w);
-              if(isDateFmt && cell.v > 30000 && cell.v < 60000){
-                // Convert Excel serial to JS Date
-                const d = new Date(Math.round((cell.v - 25569)*86400*1000));
-                row[c] = d;
-              } else {
-                row[c] = cell.v;
-              }
-            } else if(cell.t==='d'){
-              row[c] = cell.v;
-            } else if(cell.t==='s'||cell.t==='str'){
-              // Strip quotePrefix artefacts — leading apostrophe sometimes bleeds into value
-              row[c] = String(cell.v).replace(/^'+/, '');
-            } else {
-              row[c] = cell.w || cell.v || null;
-            }
+            const addr=XLSX.utils.encode_cell({r:rng.s.r+r,c:rng.s.c+c});const cell=ws[addr];
+            if(!cell||cell.v==null)continue;
+            if(cell.t==='n'){const idf=cell.w&&/^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(cell.w);if(idf&&cell.v>30000&&cell.v<60000){const d=new Date(Math.round((cell.v-25569)*86400*1000));row[c]=d;}else{row[c]=cell.v;}}
+            else if(cell.t==='d'){row[c]=cell.v;}
+            else if(cell.t==='s'||cell.t==='str'){row[c]=String(cell.v).replace(/^'+/,'');}
+            else{row[c]=cell.w||cell.v||null;}
           }
           raw.push(row);
         }
-        resolve({raw, filename:file.name, sheet});
-      } catch(err){reject(err);}
+        resolve({raw,filename:file.name,sheet});
+      }catch(err){reject(err);}
     };
-    reader.onerror=reject;
-    reader.readAsArrayBuffer(file);
+    reader.onerror=reject;reader.readAsArrayBuffer(file);
   });
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   PARSE ROWS
-══════════════════════════════════════════════════════════════════ */
-function parseRows(raw, filename) {
-  let headerIdx=-1;
+/* PARSE ROWS */
+function parseRows(raw,filename){
+  let hi=-1;
   for(let i=0;i<Math.min(raw.length,30);i++){
-    if(!raw[i]) continue;
-    const cells=raw[i].map(c=>norm(c));
-    if(cells.some(c=>c==='empid'||c==='employeeid'||c==='emp.id')) {headerIdx=i;break;}
-    const hasEmpId=cells.some(c=>c.startsWith('emp')&&c.includes('id')&&c.length<10);
-    const hasBasic=cells.some(c=>c.includes('basic')&&c.length>3);
-    if(hasEmpId&&hasBasic){headerIdx=i;break;}
+    if(!raw[i])continue;const cells=raw[i].map(c=>norm(c));
+    if(cells.some(c=>c==='empid'||c==='employeeid'||c==='emp.id')){hi=i;break;}
+    if(cells.some(c=>c.startsWith('emp')&&c.includes('id')&&c.length<10)&&cells.some(c=>c.includes('basic')&&c.length>3)){hi=i;break;}
   }
-  if(headerIdx===-1) return [];
+  if(hi===-1)return [];
+  const headers=raw[hi].map(h=>String(h==null?'':h).trim());
+  const hl=headers.map(h=>norm(h));
+  const c_id=gc(hl,'emp id','empid','employee id','emp. id','empno');
+  const c_nm=gc(hl,'employee name','emp name','empname');
+  const c_dg=gc(hl,'designation','desig');
+  const c_bt=gc(hl,'basic (th)','basic(th)','basicth','basic th');
+  const c_vt=gc(hl,'vda (th)','vda(th)','vdath','vda th','da (th)');
+  const c_my=gc(hl,'month/ year','month/year','monthyear','month year','period');
+  const c_sd=gc(hl,'sal cal days','salcaldays','cal days','caldays');
+  const c_pd=gc(hl,'pay days','paydays');
+  const c_loc=gc(hl,'branch','location','station','site','city','place');
+  const c_div=gc(hl,'division','div','divname','divi_name');
+  const c_doj=gc(hl,'date of joining','dateofjoining','doj','date of join','joining date');
 
-  const headers=raw[headerIdx].map(h=>String(h==null?'':h).trim());
-  const headersLC=headers.map(h=>norm(h));
-
-  const c_id  = gc(headersLC,'emp id','empid','employee id','emp. id','empno');
-  const c_nm  = gc(headersLC,'employee name','emp name','empname');
-  const c_dg  = gc(headersLC,'designation','desig');
-  const c_bt  = gc(headersLC,'basic (th)','basic(th)','basicth','basic th');
-  const c_vt  = gc(headersLC,'vda (th)','vda(th)','vdath','vda th','da (th)');
-  const c_my  = gc(headersLC,'month/ year','month/year','monthyear','month year','period');
-  const c_sd  = gc(headersLC,'sal cal days','salcaldays','cal days','caldays');
-  const c_pd  = gc(headersLC,'pay days','paydays');
-  // Location Name > Branch > Division > Station/Site/City — order matters
-  const c_loc  = gc(headersLC,'location name','locationname','location','branch','station','site','city','place');
-  const c_div  = gc(headersLC,'divi_name','divi name','diviname','division','div name');
-  const c_ba  = (() => { let last=-1; headersLC.forEach((h,i)=>{if(h&&norm(h)==='basic')last=i;}); return last; })();
-  const c_va  = (() => { let last=-1; headersLC.forEach((h,i)=>{const n=norm(h);if(n==='vda'||n==='da')last=i;}); return last; })();
-
-  // Detect Excel group-summary / subtotal rows anywhere in the data.
-  // These rows look like: "Mar/2025: 6 Item(s)", "Apr-2025 : 12 items", etc.
-  function isGroupSummaryRow(row) {
-    if (!row) return false;
-    for (let ci = 0; ci < Math.min(row.length, 8); ci++) {
-      const v = String(row[ci] == null ? '' : row[ci]).trim();
-      if (!v) continue;
-      // Pattern: contains "Item(s)" or "items" (case-insensitive)
-      if (/item/i.test(v)) return true;
-      // Pattern: "Mon/YYYY:" or "Mon-YYYY:" group header with colon
-      if (/^[A-Za-z]{3}[\-\/]\d{4}\s*:/i.test(v)) return true;
-    }
-    return false;
+  function isValidEmp(row){
+    if(!row)return false;
+    let id=c_id>=0?String(row[c_id]==null?'':row[c_id]).trim():'';
+    if(!id||id.length<3){for(let ci=0;ci<Math.min(row.length,6);ci++){const v=String(row[ci]==null?'':row[ci]).trim();if(v.length>=4&&v.length<=20&&/^[A-Za-z]{2,}/.test(v)&&/[0-9]/.test(v)){id=v;break;}}}
+    return id.length>=4&&id.length<=20&&/^[A-Za-z]{2,}/.test(id)&&/[0-9]/.test(id)&&!id.toLowerCase().includes('total')&&!norm(id).startsWith('empid');
   }
+
+  let fd=hi+1;
+  while(fd<raw.length&&!isValidEmp(raw[fd])){if(fd-hi>10)break;fd++;}
 
   const rows=[];
-  for(let i=headerIdx+1;i<raw.length;i++){
+  for(let i=fd;i<raw.length;i++){
     const row=raw[i];
-    if(!row||row.every(c=>c===null||c==='')) continue;
-    if(isGroupSummaryRow(row)) continue;
-    if(c_id<0) continue;
-
-    // Primary: get eid from resolved column
+    if(!row||row.every(c=>c===null||c===''))continue;
+    if(c_id<0)continue;
+    const acs=row.map(c=>String(c==null?'':c).trim()).join('|').toLowerCase();
+    if(/item\(s\)|item:|\/item|\bitem\b/.test(acs))continue;
     let eid=String(row[c_id]==null?'':row[c_id]).trim();
-
-    // Fallback: if c_id cell is empty (row shorter than expected or XLSX.js padding issue)
-    // scan entire row for first cell that looks like an employee ID
-    if(!eid || eid.length < 3) {
-      for(let ci=0; ci<Math.min(row.length, 10); ci++){
-        const v = String(row[ci]==null?'':row[ci]).trim();
-        // Employee ID pattern: starts with letters, has alphanumeric chars, 4-20 chars
-        if(v.length>=4 && v.length<=20 && /^[A-Za-z]{2,}/.test(v) && /[0-9]/.test(v) && !v.toLowerCase().includes('total') && !v.toLowerCase().includes('grand')){
-          eid = v; break;
-        }
+    if(!eid||eid.length<3){
+      for(let ci=0;ci<Math.min(row.length,10);ci++){
+        const v=String(row[ci]==null?'':row[ci]).trim();
+        if(v.length>=4&&v.length<=20&&/^[A-Za-z]{2,}/.test(v)&&/[0-9]/.test(v)&&!v.toLowerCase().includes('total')&&!/item/i.test(v)&&!/^\w{3}\/\d{4}/.test(v)){eid=v;break;}
       }
     }
-
-    // Skip empty, numeric-only, header keywords, and grand total rows
-    if(!eid) continue;
-    if(/^\d+$/.test(eid)) continue;
-    if(eid.toLowerCase().includes('grand total')) continue;
-    if(eid.toLowerCase().includes('total')) continue;
-    if(norm(eid)==='empid'||norm(eid)==='employeeid') continue;
-    if(eid.length < 3 || eid.length > 25) continue;
+    if(!eid||/^\d+$/.test(eid))continue;
+    if(eid.toLowerCase().includes('total'))continue;
+    if(norm(eid)==='empid'||norm(eid)==='employeeid')continue;
+    if(eid.length<3||eid.length>25)continue;
+    const fc=row.slice(0,6).map(c=>String(c==null?'':c).toLowerCase().trim()).join('|');
+    if(fc.includes('grand total')||/\btotal\b/.test(fc))continue;
 
     const bt=parseFloat(row[c_bt])||0;
     const vt=parseFloat(row[c_vt])||0;
-    const theoretical=bt+vt;
     const desig=c_dg>=0?String(row[c_dg]||'').trim():'';
-    const loc_raw=c_loc>=0?String(row[c_loc]==null?'':row[c_loc]).trim():'';
-    // If Location Name is empty, try extracting city from DIVI_NAME (e.g. "AMBULIFT BAGDOGRA" → "BAGDOGRA"... 
-    // but city names embedded in division names are tricky; use last word as fallback)
-    let loc = loc_raw;
-    if(!loc && c_div>=0){
-      const divRaw = String(row[c_div]==null?'':row[c_div]).trim();
-      // Try full division string first (might contain city name like "BHS BHUBANESWAR")
-      loc = divRaw;
-    }
-    if(!loc) loc = String(row[1]==null?'':row[1]).trim();
+    const loc=c_loc>=0?String(row[c_loc]==null?'':row[c_loc]).trim():'';
+    const division=c_div>=0?String(row[c_div]==null?'':row[c_div]).trim():loc;
     const monthYear=(c_my>=0?parseMonth(row[c_my],filename):null)||parseMonth(null,filename)||'Unknown';
     const sal_cal_days=c_sd>=0?parseInt(row[c_sd])||31:31;
     const pay_days=c_pd>=0?parseInt(row[c_pd])||sal_cal_days:sal_cal_days;
+    let doj='';
+    if(c_doj>=0&&row[c_doj]!=null){const dv=row[c_doj];if(dv instanceof Date){doj=`${String(dv.getDate()).padStart(2,'0')}/${String(dv.getMonth()+1).padStart(2,'0')}/${dv.getFullYear()}`;}else{doj=String(dv).trim();}}
     const skill=getSkill(desig);
     const area=getArea(loc);
-    const mw=getMW(area,skill,monthYear);
-    // Eligibility: statutory = must be < 21000; extended = all with wages > 0 are eligible
-    const elig=theoretical>0&&(bonusAbove21k||theoretical<21000);
-    // Wage used for bonus: capped at 21000 when above threshold in extended mode
-    const bonusWage=bonusAbove21k?Math.min(theoretical,21000):theoretical;
+    const mw=getMW(area,skill,monthYear,eid,loc);
+    const elig=bt+vt>0&&bt+vt<21000;
+    const app_govt=isHaryanaEmp(eid)?'Haryana State':isChennaiEmp(loc)?'Tamil Nadu State':'Central Govt';
     let proratedMW=0,bonus=0;
-    if(elig&&sal_cal_days>0&&mw>0){
-      proratedMW=Math.floor((mw/sal_cal_days)*pay_days);
-      // In extended mode cap bonus wage at 21000; bonus base = min(proratedMW, prorated 21000)
-      const bonusBase=bonusAbove21k?Math.min(proratedMW,Math.floor((21000/sal_cal_days)*pay_days)):proratedMW;
-      bonus=Math.round(bonusBase*0.0833);
-    }
-    rows.push({
-      emp_id:eid,
-      emp_name:c_nm>=0?String(row[c_nm]||'').trim():'',
-      month_year:monthYear, designation:desig, skill,
-      location:loc, area, basic_th:bt, vda_th:vt,
-      theoretical, min_wages:mw, sal_cal_days, pay_days,
-      prorated_mw:proratedMW, eligible:elig, bonus
-    });
+    if(elig&&sal_cal_days>0&&mw>0){proratedMW=Math.round((mw/sal_cal_days)*pay_days);bonus=Math.round(proratedMW*0.0833);}
+    rows.push({emp_id:eid,emp_name:c_nm>=0?String(row[c_nm]||'').trim():'',doj,month_year:monthYear,designation:desig,skill,location:loc,division,area,basic_th:bt,vda_th:vt,fixed_basic_da:bt+vt,app_govt,theoretical:bt+vt,min_wages:mw,sal_cal_days,pay_days,prorated_mw:proratedMW,eligible:elig,bonus});
   }
   return rows;
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   STATE
-══════════════════════════════════════════════════════════════════ */
-let uploadedFiles=[], allRows=[], filteredRows=[], sortCol=-1, sortDir=1;
-let bonusAbove21k=false;  // user-configured setting
+/* STATE */
+let uploadedFiles=[],allRows=[],filteredRows=[],sortCol=-1,sortDir=1;
 
-function updateSettingUI(){
-  bonusAbove21k=document.getElementById('toggle-above21k').checked;
-  const pill=document.getElementById('setting-row');
-  const desc=document.getElementById('setting-desc');
-  if(bonusAbove21k){
-    pill.classList.add('active');
-    desc.textContent='Extended Mode';
-  } else {
-    pill.classList.remove('active');
-    desc.textContent='Statutory Mode';
-  }
-}
-
-function reCalcWithSetting(){
-  updateSettingUI();
-  if(!allRows.length) return;
-  // Re-run bonus calculation on already-parsed raw data with new flag
-  allRows = allRows.map(r => {
-    const theoretical = r.theoretical;
-    const elig = theoretical > 0 && (bonusAbove21k || theoretical < 21000);
-    let proratedMW = 0, bonus = 0;
-    if(elig && r.sal_cal_days > 0 && r.min_wages > 0){
-      proratedMW = Math.floor((r.min_wages / r.sal_cal_days) * r.pay_days);
-      const bonusBase = bonusAbove21k
-        ? Math.min(proratedMW, Math.floor((21000 / r.sal_cal_days) * r.pay_days))
-        : proratedMW;
-      bonus = Math.round(bonusBase * 0.0833);
-    }
-    return {...r, eligible: elig, prorated_mw: proratedMW, bonus};
-  });
-  applyFilters();
-  updateCards(filteredRows);
-  toast(bonusAbove21k ? 'Extended mode: bonus applicable above ₹21,000' : 'Statutory mode: ₹21,000 ceiling applied', 'ok');
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   FILE INPUT
-══════════════════════════════════════════════════════════════════ */
+/* FILE INPUT */
 const dropZone=document.getElementById('drop-zone');
 const fileInput=document.getElementById('file-input');
 const fileChips=document.getElementById('file-chips');
 const calcBtn=document.getElementById('calc-btn');
-
 dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('drag');});
 dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag'));
 dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag');addFiles([...e.dataTransfer.files]);});
 fileInput.addEventListener('change',e=>{addFiles([...e.target.files]);fileInput.value='';});
+function addFiles(files){files.forEach(f=>{if(!f.name.match(/\.(xlsx|xls)$/i)){toast('Only .xlsx files supported: '+f.name,'err');return;}if(uploadedFiles.find(u=>u.name===f.name)){toast('Already added: '+f.name,'err');return;}uploadedFiles.push(f);});renderChips();calcBtn.disabled=uploadedFiles.length===0;}
+function removeFile(name){uploadedFiles=uploadedFiles.filter(f=>f.name!==name);renderChips();calcBtn.disabled=uploadedFiles.length===0;}
+function renderChips(){fileChips.innerHTML='';uploadedFiles.forEach(f=>{const ch=document.createElement('div');ch.className='chip';ch.innerHTML=`<span class="chip-icon">&#128196;</span><span class="chip-name">${f.name}</span><span class="chip-size">${(f.size/1024).toFixed(1)} KB</span><button class="chip-rm" onclick="removeFile('${f.name}')">x</button>`;fileChips.appendChild(ch);});}
 
-function addFiles(files){
-  files.forEach(f=>{
-    if(!f.name.match(/\.(xlsx|xls)$/i)){toast('Only .xlsx files supported: '+f.name,'err');return;}
-    if(uploadedFiles.find(u=>u.name===f.name)){toast('Already added: '+f.name,'err');return;}
-    uploadedFiles.push(f);
-  });
-  renderChips();
-  calcBtn.disabled=uploadedFiles.length===0;
-}
-
-function removeFile(name){
-  uploadedFiles=uploadedFiles.filter(f=>f.name!==name);
-  renderChips();
-  calcBtn.disabled=uploadedFiles.length===0;
-}
-
-function renderChips(){
-  fileChips.innerHTML='';
-  uploadedFiles.forEach(f=>{
-    const chip=document.createElement('div');
-    chip.className='chip';
-    chip.innerHTML=`<span class="chip-icon">📄</span><span class="chip-name">${f.name}</span><span class="chip-size">${(f.size/1024).toFixed(1)} KB</span><button class="chip-rm" onclick="removeFile('${f.name}')">✕</button>`;
-    fileChips.appendChild(chip);
-  });
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   RUN CALCULATION
-══════════════════════════════════════════════════════════════════ */
+/* CALCULATE */
 async function runCalc(){
-  if(!uploadedFiles.length) return;
+  if(!uploadedFiles.length)return;
   calcBtn.disabled=true;
-  const pw=document.getElementById('progress-wrap');
-  const pf=document.getElementById('progress-fill');
-  const pl=document.getElementById('progress-lbl');
-  pw.classList.add('on');
-  allRows=[];
-
+  const pw=document.getElementById('progress-wrap'),pf=document.getElementById('progress-fill'),pl=document.getElementById('progress-lbl');
+  pw.classList.add('on');allRows=[];
   for(let i=0;i<uploadedFiles.length;i++){
     pf.style.width=Math.round(i/uploadedFiles.length*100)+'%';
-    pl.textContent=`Processing ${uploadedFiles[i].name} (${i+1}/${uploadedFiles.length})…`;
-    try{
-      const {raw,filename}=await readFile(uploadedFiles[i]);
-      const rows=parseRows(raw,filename);
-      if(rows.length===0){toast(`No employee rows found in ${filename}`,'err');}
-      else{allRows.push(...rows);toast(`${rows.length} rows from ${filename}`,'ok');}
-    }catch(e){toast(`Error reading ${uploadedFiles[i].name}: ${e.message}`,'err');}
+    pl.textContent=`Processing ${uploadedFiles[i].name} (${i+1}/${uploadedFiles.length})...`;
+    try{const{raw,filename}=await readFile(uploadedFiles[i]);const rows=parseRows(raw,filename);if(!rows.length){toast(`No rows in ${filename}`,'err');}else{allRows.push(...rows);toast(`${rows.length} rows from ${filename}`,'ok');}}catch(e){toast(`Error: ${e.message}`,'err');}
     await new Promise(r=>setTimeout(r,60));
   }
-
-  pf.style.width='100%';
-  pl.textContent='Done!';
-  await new Promise(r=>setTimeout(r,350));
-  pw.classList.remove('on');
-
-  if(!allRows.length){toast('No data extracted. Check file format.','err');calcBtn.disabled=false;return;}
-
-  // Populate month filter
+  pf.style.width='100%';pl.textContent='Done!';
+  await new Promise(r=>setTimeout(r,350));pw.classList.remove('on');
+  if(!allRows.length){toast('No data extracted.','err');calcBtn.disabled=false;return;}
   const months=[...new Set(allRows.map(r=>r.month_year))].sort();
-  const mf=document.getElementById('f-month');
-  mf.innerHTML='<option value="">All Months</option>';
+  const mf=document.getElementById('f-month');mf.innerHTML='<option value="">All Months</option>';
   months.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;mf.appendChild(o);});
-
-  filteredRows=[...allRows];
-  renderTable(filteredRows);
-  updateCards(filteredRows);
+  filteredRows=[...allRows];renderTable(filteredRows);updateCards(filteredRows);
   document.getElementById('results').classList.add('on');
-  document.getElementById('result-meta').textContent=`${allRows.length} records · ${months.length} month(s) · ${uploadedFiles.length} file(s)`;
+  document.getElementById('result-meta').textContent=`${allRows.length} records - ${months.length} month(s) - ${uploadedFiles.length} file(s)`;
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   RENDER TABLE
-══════════════════════════════════════════════════════════════════ */
+/* RENDER TABLE */
 function renderTable(rows){
-  const tbody=document.getElementById('tbl-body');
-  const tfoot=document.getElementById('tbl-foot');
+  const tbody=document.getElementById('tbl-body'),tfoot=document.getElementById('tbl-foot');
   tbody.innerHTML='';
   document.getElementById('f-count').textContent=`${rows.length} record${rows.length!==1?'s':''}`;
-
-  if(!rows.length){
-    tbody.innerHTML=`<tr><td colspan="16"><div class="empty"><div class="empty-icon">🔍</div>No records match your filters.</div></td></tr>`;
-    tfoot.innerHTML=''; return;
-  }
-
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="19"><div class="empty"><div class="empty-icon">&#128269;</div>No records match your filters.</div></td></tr>';tfoot.innerHTML='';return;}
   rows.forEach((r,i)=>{
-    const tr=document.createElement('tr');
-    tr.style.animationDelay=`${Math.min(i*10,250)}ms`;
+    const tr=document.createElement('tr');tr.style.animationDelay=`${Math.min(i*10,250)}ms`;
     tr.innerHTML=`
       <td class="td-sno">${i+1}</td>
       <td class="td-id">${esc(r.emp_id)}</td>
       <td class="td-name">${esc(r.emp_name)}</td>
+      <td>${esc(r.doj)}</td>
       <td>${esc(r.month_year)}</td>
-      <td>${esc(r.designation)}</td>
-      <td>${esc(r.skill)}</td>
-      <td>${esc(r.location)}</td>
-      <td><span class="td-area area-${r.area}">${r.area}</span></td>
+      <td class="td-num">${r.sal_cal_days}</td>
       <td class="td-num">${fmt(r.basic_th)}</td>
       <td class="td-num">${fmt(r.vda_th)}</td>
-      <td class="td-num">${r.min_wages?fmt(r.min_wages):'—'}</td>
-      <td class="td-num">${r.sal_cal_days}</td>
+      <td class="td-num">${fmt(r.fixed_basic_da)}</td>
       <td class="td-num">${r.pay_days}</td>
-      <td class="td-num">${r.prorated_mw?fmt(r.prorated_mw):'—'}</td>
-      <td><span class="${r.eligible?'badge-yes':'badge-no'}">${r.eligible?'Yes':'No'}</span></td>
-      <td class="td-bonus td-num">${r.eligible?fmt(r.bonus):'—'}</td>`;
+      <td><span class="${r.eligible?'badge-yes':'badge-no'}">${r.eligible?'Applicable':'Not Applicable'}</span></td>
+      <td>${esc(r.division||r.location)}</td>
+      <td>${esc(r.designation)}</td>
+      <td>${esc(r.app_govt)}</td>
+      <td><span class="td-area area-${r.area}">${r.area}</span></td>
+      <td>${esc(r.skill)}</td>
+      <td class="td-num">${r.min_wages?fmt(r.min_wages):'--'}</td>
+      <td class="td-num">${r.prorated_mw?fmt(r.prorated_mw):'--'}</td>
+      <td class="td-bonus td-num">${r.eligible?fmt(r.bonus):'--'}</td>`;
     tbody.appendChild(tr);
   });
-
-  const elig=rows.filter(r=>r.eligible);
-  const tot=elig.reduce((s,r)=>s+r.bonus,0);
-  tfoot.innerHTML=`<tr>
-    <td colspan="8">TOTAL — ${rows.length} employees · ${elig.length} eligible · ${rows.length-elig.length} not eligible</td>
-    <td class="td-num">${fmt(rows.reduce((s,r)=>s+r.basic_th,0))}</td>
-    <td class="td-num">${fmt(rows.reduce((s,r)=>s+r.vda_th,0))}</td>
-    <td colspan="4"></td>
-    <td></td>
-    <td class="td-num" style="color:var(--accent)">₹${tot.toLocaleString('en-IN')}</td>
-  </tr>`;
+  const elig=rows.filter(r=>r.eligible),tot=elig.reduce((s,r)=>s+r.bonus,0);
+  tfoot.innerHTML=`<tr><td colspan="6">TOTAL - ${rows.length} employees - ${elig.length} eligible - ${rows.length-elig.length} not eligible</td><td class="td-num">${fmt(rows.reduce((s,r)=>s+r.basic_th,0))}</td><td class="td-num">${fmt(rows.reduce((s,r)=>s+r.vda_th,0))}</td><td class="td-num">${fmt(rows.reduce((s,r)=>s+r.fixed_basic_da,0))}</td><td colspan="9"></td><td class="td-num" style="color:var(--accent)">Rs.${tot.toLocaleString('en-IN')}</td></tr>`;
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   SUMMARY CARDS
-══════════════════════════════════════════════════════════════════ */
+/* CARDS */
 function updateCards(rows){
-  const elig=rows.filter(r=>r.eligible);
-  const bonus=elig.reduce((s,r)=>s+r.bonus,0);
+  const elig=rows.filter(r=>r.eligible),bonus=elig.reduce((s,r)=>s+r.bonus,0);
   document.getElementById('sc-total').textContent=rows.length.toLocaleString('en-IN');
   document.getElementById('sc-elig').textContent=elig.length.toLocaleString('en-IN');
   document.getElementById('sc-notelig').textContent=(rows.length-elig.length).toLocaleString('en-IN');
-  document.getElementById('sc-bonus').textContent='₹'+bonus.toLocaleString('en-IN');
+  document.getElementById('sc-bonus').textContent='Rs.'+bonus.toLocaleString('en-IN');
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   FILTERS
-══════════════════════════════════════════════════════════════════ */
+/* FILTERS */
 function applyFilters(){
-  const search=document.getElementById('f-search').value.toLowerCase();
-  const elig=document.getElementById('f-elig').value;
-  const area=document.getElementById('f-area').value;
-  const month=document.getElementById('f-month').value;
+  const s=document.getElementById('f-search').value.toLowerCase(),el=document.getElementById('f-elig').value,ar=document.getElementById('f-area').value,mo=document.getElementById('f-month').value;
   filteredRows=allRows.filter(r=>{
-    if(search&&!r.emp_name.toLowerCase().includes(search)&&!r.emp_id.toLowerCase().includes(search)) return false;
-    if(elig&&(r.eligible?'Yes':'No')!==elig) return false;
-    if(area&&r.area!==area) return false;
-    if(month&&r.month_year!==month) return false;
+    if(s&&!r.emp_name.toLowerCase().includes(s)&&!r.emp_id.toLowerCase().includes(s))return false;
+    if(el&&(r.eligible?'Yes':'No')!==el)return false;
+    if(ar&&r.area!==ar)return false;
+    if(mo&&r.month_year!==mo)return false;
     return true;
   });
-  if(sortCol>=0) doSort();
-  else renderTable(filteredRows);
-  updateCards(filteredRows);
+  if(sortCol>=0)doSort();else renderTable(filteredRows);updateCards(filteredRows);
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   SORT
-══════════════════════════════════════════════════════════════════ */
-const SORT_KEYS=['_sno','emp_id','emp_name','month_year','designation','skill','location','area','basic_th','vda_th','min_wages','sal_cal_days','pay_days','prorated_mw','_elig','bonus'];
+/* SORT */
+const SORT_KEYS=['_sno','emp_id','emp_name','doj','month_year','sal_cal_days','basic_th','vda_th','fixed_basic_da','pay_days','_elig','location','designation','app_govt','area','skill','min_wages','prorated_mw','bonus'];
+function sortTbl(col){document.querySelectorAll('thead th').forEach(th=>th.classList.remove('asc','desc'));sortDir=(sortCol===col)?-sortDir:1;sortCol=col;document.querySelectorAll('thead th')[col].classList.add(sortDir===1?'asc':'desc');doSort();renderTable(filteredRows);}
+function doSort(){const k=SORT_KEYS[sortCol];filteredRows.sort((a,b)=>{let va=k==='_elig'?(a.eligible?1:0):(k==='_sno'?0:(a[k]??''));let vb=k==='_elig'?(b.eligible?1:0):(k==='_sno'?0:(b[k]??''));if(typeof va==='string')va=va.toLowerCase();if(typeof vb==='string')vb=vb.toLowerCase();return(va<vb?-1:va>vb?1:0)*sortDir;});}
 
-function sortTbl(col){
-  document.querySelectorAll('thead th').forEach((th,i)=>{th.classList.remove('asc','desc');});
-  sortDir=(sortCol===col)?-sortDir:1;
-  sortCol=col;
-  document.querySelectorAll('thead th')[col].classList.add(sortDir===1?'asc':'desc');
-  doSort();
-  renderTable(filteredRows);
-}
-
-function doSort(){
-  const key=SORT_KEYS[sortCol];
-  filteredRows.sort((a,b)=>{
-    let va=key==='_elig'?(a.eligible?1:0):(key==='_sno'?0:(a[key]??''));
-    let vb=key==='_elig'?(b.eligible?1:0):(key==='_sno'?0:(b[key]??''));
-    if(typeof va==='string') va=va.toLowerCase();
-    if(typeof vb==='string') vb=vb.toLowerCase();
-    return(va<vb?-1:va>vb?1:0)*sortDir;
-  });
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   DOWNLOAD EXCEL
-══════════════════════════════════════════════════════════════════ */
+/* DOWNLOAD */
 function downloadExcel(){
   if(!filteredRows.length){toast('No data to download','err');return;}
-  const headers=['S.No','Employee ID','Employee Name','Month/Year','Designation','Skill','Location','Area','Basic (Th) INR','VDA (Th) INR','Min Wages INR','Sal Cal Days','Pay Days','Prorated MW INR','Eligible for Bonus','Bonus (8.33%) INR'];
-  const data=[headers,...filteredRows.map((r,i)=>[
-    i+1,r.emp_id,r.emp_name,r.month_year,r.designation,r.skill,
-    r.location,r.area,r.basic_th,r.vda_th,r.min_wages||'',
-    r.sal_cal_days,r.pay_days,r.prorated_mw||'',
-    r.eligible?'Yes':'No', r.eligible?r.bonus:'—'
-  ])];
-  const elig=filteredRows.filter(r=>r.eligible);
-  data.push(['TOTAL','',`${filteredRows.length} employees`,'','','','','',
-    filteredRows.reduce((s,r)=>s+r.basic_th,0),
-    filteredRows.reduce((s,r)=>s+r.vda_th,0),'','','','',
-    `${elig.length} Yes / ${filteredRows.length-elig.length} No`,
-    elig.reduce((s,r)=>s+r.bonus,0)
-  ]);
-  const wb=XLSX.utils.book_new();
-  const ws=XLSX.utils.aoa_to_sheet(data);
-  ws['!cols']=[6,14,32,12,24,13,14,6,12,10,14,10,10,14,17,14].map(w=>({wch:w}));
-  XLSX.utils.book_append_sheet(wb,ws,'Bonus Register');
-  XLSX.writeFile(wb,'Bonus_Register.xlsx');
-  toast('Excel downloaded','ok');
+  const hdr=['S.No','Employee ID','Employee Name','D.O.J','Pay Date','Days in Month','Basic INR','VDA INR','Fixed Basic+DA INR','Paid Days','Eligibility Criteria','Divi_Name','DSG_Name','App Govt','Area','Category','Min Wages INR','Ern Bonus Wages INR','Bonus INR'];
+  const data=[hdr,...filteredRows.map((r,i)=>[i+1,r.emp_id,r.emp_name,r.doj,r.month_year,r.sal_cal_days,r.basic_th,r.vda_th,r.fixed_basic_da,r.pay_days,r.eligible?'Applicable':'Not Applicable',r.division||r.location,r.designation,r.app_govt,r.area,r.skill,r.min_wages||'',r.prorated_mw||'',r.eligible?r.bonus:'--'])];
+  const el=filteredRows.filter(r=>r.eligible);
+  data.push(['TOTAL','',`${filteredRows.length} employees`,'','','',filteredRows.reduce((s,r)=>s+r.basic_th,0),filteredRows.reduce((s,r)=>s+r.vda_th,0),filteredRows.reduce((s,r)=>s+r.fixed_basic_da,0),'','','','','','','','','',el.reduce((s,r)=>s+r.bonus,0)]);
+  const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(data);
+  ws['!cols']=[6,14,28,12,12,13,12,10,16,10,18,22,22,14,6,14,14,18,12].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb,ws,'Bonus Register');XLSX.writeFile(wb,'Bonus_Register.xlsx');toast('Excel downloaded','ok');
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   RESET
-══════════════════════════════════════════════════════════════════ */
-function resetAll(){
-  uploadedFiles=[];allRows=[];filteredRows=[];sortCol=-1;sortDir=1;
-  renderChips();
-  calcBtn.disabled=true;
-  document.getElementById('results').classList.remove('on');
-  document.getElementById('f-search').value='';
-  document.getElementById('f-elig').value='';
-  document.getElementById('f-area').value='';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+/* RESET */
+function resetAll(){uploadedFiles=[];allRows=[];filteredRows=[];sortCol=-1;sortDir=1;renderChips();calcBtn.disabled=true;document.getElementById('results').classList.remove('on');document.getElementById('f-search').value='';document.getElementById('f-elig').value='';document.getElementById('f-area').value='';window.scrollTo({top:0,behavior:'smooth'});}
 
-/* ══════════════════════════════════════════════════════════════════
-   HELPERS
-══════════════════════════════════════════════════════════════════ */
+/* HELPERS */
 function fmt(n){return Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function toast(msg,type='info'){const wrap=document.getElementById('toast-wrap');const t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`<span>${type==='err'?'!':'ok'}</span>${msg}`;wrap.appendChild(t);setTimeout(()=>t.remove(),4200);}
 
-function toast(msg, type='info'){
-  const wrap=document.getElementById('toast-wrap');
-  const t=document.createElement('div');
-  t.className=`toast ${type}`;
-  t.innerHTML=`<span>${type==='err'?'⚠':'✓'}</span>${msg}`;
-  wrap.appendChild(t);
-  setTimeout(()=>t.remove(),4200);
-}
+/* MODALS */
+function openModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('on');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.on').forEach(m=>m.classList.remove('on'));document.body.style.overflow='';}});
 </script>
+<!-- SKILL MAPPED MODAL -->
+<div class="modal-overlay" id="modal-skill" onclick="if(event.target===this)closeModal('modal-skill')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">Designation to Skill Mapping</div>
+      <button class="modal-close" onclick="closeModal('modal-skill')">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <table class="modal-tbl">
+        <thead><tr><th>#</th><th>Designation</th><th>Skill Level</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>OPERATOR-BHS</td><td><span class="skill-badge sk-sk">Skilled</span></td></tr>
+          <tr><td>2</td><td>SITE INCHARGE</td><td><span class="skill-badge sk-hs">Highly Skilled</span></td></tr>
+          <tr><td>3</td><td>JUNIOR TECHNICIAN</td><td><span class="skill-badge sk-ss">Semi-Skilled</span></td></tr>
+          <tr><td>4</td><td>TECHNICIAN-O&amp;M</td><td><span class="skill-badge sk-sk">Skilled</span></td></tr>
+          <tr><td>5</td><td>JR. TECHNICIAN -O&amp;M</td><td><span class="skill-badge sk-ss">Semi-Skilled</span></td></tr>
+          <tr><td>6</td><td>TECHNICIAN</td><td><span class="skill-badge sk-sk">Skilled</span></td></tr>
+          <tr><td>7</td><td>HELPER</td><td><span class="skill-badge sk-un">Unskilled</span></td></tr>
+          <tr><td>8</td><td>Technician Cum Driver</td><td><span class="skill-badge sk-sk">Skilled</span></td></tr>
+          <tr><td>9</td><td>Driver/Attendant</td><td><span class="skill-badge sk-ss">Semi-Skilled</span></td></tr>
+          <tr><td>10</td><td>Attendant/Helper</td><td><span class="skill-badge sk-ss">Semi-Skilled</span></td></tr>
+          <tr><td>11</td><td>Attendant</td><td><span class="skill-badge sk-ss">Semi-Skilled</span></td></tr>
+          <tr><td>12</td><td>ENGINEER</td><td><span class="skill-badge sk-hs">Highly Skilled</span></td></tr>
+          <tr><td>13</td><td>SR. TECHNICIAN-O&amp;M</td><td><span class="skill-badge sk-hs">Highly Skilled</span></td></tr>
+          <tr><td>14</td><td>SUPERVISOR</td><td><span class="skill-badge sk-hs">Highly Skilled</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--ink-soft);margin-top:8px;">Fallback: "Technician" variants = Skilled &middot; "Helper" = Unskilled &middot; "Supervisor/Engineer/Incharge" = Highly Skilled &middot; others = Semi-Skilled</p>
+    </div>
+  </div>
+</div>
+
+<!-- MW REGISTERED MODAL -->
+<div class="modal-overlay" id="modal-mw" onclick="if(event.target===this)closeModal('modal-mw')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">Minimum Wages Register (&#8377;/month)</div>
+      <button class="modal-close" onclick="closeModal('modal-mw')">&#10005;</button>
+    </div>
+    <div class="modal-body">
+
+      <p class="modal-section-title" style="color:var(--accent);">Haryana State &mdash; Construction &amp; Maintenance (W.E.F. 01-01-2025) &mdash; Rule: Emp ID first 2 letters = HO</p>
+      <table class="modal-tbl">
+        <thead><tr><th>Period</th><th>Unskilled</th><th>Semi-Skilled A</th><th>Semi-Skilled B</th><th>Skilled A</th><th>Skilled B</th><th>Highly Skilled</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">Jan 2025 onwards</td><td>11,257.12</td><td>11,819.94</td><td>12,410.91</td><td>13,031.47</td><td>13,683.06</td><td>14,367.21</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--ink-soft);margin-bottom:16px;">Uses Semi-Skilled B &amp; Skilled B (higher slab). Source: Haryana Labour Dept notification 04/04/2025.</p>
+
+      <p class="modal-section-title" style="color:#7C3AED;">Tamil Nadu State &mdash; Construction &amp; Maintenance (W.E.F. 01-10-2024) &mdash; Rule: Branch contains Chennai</p>
+      <table class="modal-tbl">
+        <thead><tr><th>Period</th><th>Unskilled</th><th>Semi-Skilled</th><th>Skilled</th><th>Highly Skilled</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">Oct 2024 onwards</td><td>14,656.72</td><td>15,567.76</td><td>16,986.32</td><td>18,404.88</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--ink-soft);margin-bottom:16px;">Daily rates x 26 working days. Source: Tamil Nadu Labour Dept.</p>
+
+      <p class="modal-section-title" style="color:var(--blue);">Central Govt CLC &mdash; Construction &amp; Maintenance &mdash; All other employees (Monthly = Daily x 26)</p>
+      <table class="modal-tbl">
+        <thead><tr><th>Period</th><th>Area</th><th>Unskilled</th><th>Semi-Skilled</th><th>Skilled</th><th>Highly Skilled</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Apr 2023 &ndash; Sep 2023</td><td><span class="td-area area-A">A</span></td><td>19,136</td><td>21,216</td><td>23,322</td><td>25,298</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>16,016</td><td>18,070</td><td>21,216</td><td>23,322</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>12,844</td><td>15,002</td><td>18,070</td><td>21,216</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Oct 2023 &ndash; Mar 2024</td><td><span class="td-area area-A">A</span></td><td>19,526</td><td>21,632</td><td>23,790</td><td>25,792</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>16,328</td><td>18,434</td><td>21,632</td><td>23,790</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>13,104</td><td>15,314</td><td>18,434</td><td>21,632</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Apr 2024 &ndash; Sep 2024</td><td><span class="td-area area-A">A</span></td><td>20,228</td><td>22,412</td><td>24,648</td><td>26,728</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>16,926</td><td>19,084</td><td>22,412</td><td>24,648</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>13,572</td><td>15,860</td><td>19,084</td><td>22,412</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Oct 2024 &ndash; Mar 2025</td><td><span class="td-area area-A">A</span></td><td>20,358</td><td>22,568</td><td>24,804</td><td>26,910</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>17,030</td><td>19,214</td><td>22,568</td><td>24,804</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>13,676</td><td>15,964</td><td>19,214</td><td>22,568</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Apr 2025 &ndash; Sep 2025</td><td><span class="td-area area-A">A</span></td><td>20,930</td><td>23,218</td><td>25,506</td><td>27,690</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>17,524</td><td>19,760</td><td>23,218</td><td>25,506</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>14,066</td><td>16,432</td><td>19,760</td><td>23,218</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Oct 2025 &ndash; Mar 2026</td><td><span class="td-area area-A">A</span></td><td>20,930</td><td>23,218</td><td>25,506</td><td>27,690</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>17,524</td><td>19,760</td><td>23,218</td><td>25,506</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>14,066</td><td>16,432</td><td>19,760</td><td>23,218</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td rowspan="3" style="font-weight:600;vertical-align:top;padding-top:10px;">Apr 2026 &ndash; Sep 2026</td><td><span class="td-area area-A">A</span></td><td>21,502</td><td>23,868</td><td>26,208</td><td>28,444</td></tr>
+          <tr><td><span class="td-area area-B">B</span></td><td>18,018</td><td>20,306</td><td>23,868</td><td>26,208</td></tr>
+          <tr><td><span class="td-area area-C">C</span></td><td>14,456</td><td>16,900</td><td>20,306</td><td>23,868</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--ink-soft);margin-top:8px;">Source: CLC notifications (official daily rates x 26 working days). Updated bi-annually.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AREA INCLUDED MODAL -->
+<div class="modal-overlay" id="modal-area" onclick="if(event.target===this)closeModal('modal-area')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">Location to Area Classification</div>
+      <button class="modal-close" onclick="closeModal('modal-area')">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <table class="modal-tbl">
+        <thead><tr><th>#</th><th>Location</th><th>Area</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Ahmedabad</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>2</td><td>Bangalore</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>3</td><td>Chennai</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>4</td><td>Delhi</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>5</td><td>Gurgaon</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>6</td><td>Hyderabad</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>7</td><td>Kolkata</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>8</td><td>Lucknow</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>9</td><td>Mumbai</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>10</td><td>Nagpur</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>11</td><td>Pune</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>12</td><td>Kanpur</td><td><span class="td-area area-A">A</span></td></tr>
+          <tr><td>13</td><td>Amritsar</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>14</td><td>Aurangabad</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>15</td><td>Bhopal</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>16</td><td>Bhubaneshwar</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>16a</td><td>Bhubneshwar</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>17</td><td>Calicut / Kozhikode</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>18</td><td>Chandigarh</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>19</td><td>Coimbatore</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>20</td><td>Dehradun</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>21</td><td>Goa</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>22</td><td>Guwahati</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>23</td><td>Indore</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>24</td><td>Jaipur</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>25</td><td>Jammu</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>26</td><td>Jodhpur</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>27</td><td>Kochi</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>28</td><td>Madurai</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>29</td><td>Mangalore</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>30</td><td>Meerut</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>31</td><td>Raipur</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>32</td><td>Rajkot</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>33</td><td>Ranchi</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>34</td><td>Srinagar</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>35</td><td>Surat</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>36</td><td>Trichy / Tiruchirappalli</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>37</td><td>Trivandrum / Thiruvananthapuram</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>38</td><td>Vadodara</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>39</td><td>Varanasi</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>40</td><td>Vizag / Visakhapatnam</td><td><span class="td-area area-B">B</span></td></tr>
+          <tr><td>41</td><td>All other cities</td><td><span class="td-area area-C">C</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--ink-soft);margin-top:8px;">Any location not listed above defaults to Area C. Classification as per CLC notification dated 19th January 2017.</p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
